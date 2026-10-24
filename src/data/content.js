@@ -194,8 +194,8 @@ export const faqs = [
     a: 'Go to Settings in the app and choose Delete account. You can also request deletion from our Delete Account page. Deleting your account permanently removes your profile.',
   },
   {
-    q: 'What is Humsafar – Daata?',
-    a: 'Humsafar – Daata is a matrimonial and matchmaking app for people who are looking for a life partner. It helps you create a profile, set partner preferences, discover compatible profiles and connect privately.',
+    q: 'What is Humsafar?',
+    a: 'Humsafar is a matrimonial and matchmaking app for people who are looking for a life partner. It helps you create a profile, set partner preferences, discover compatible profiles and connect privately.',
   },
   {
     q: 'Who can use Humsafar?',
@@ -207,7 +207,7 @@ export const faqs = [
   },
   {
     q: 'How are profiles verified?',
-    a: 'All accounts confirm a mobile number with an OTP, and photos are reviewed before they go live. The Safety & Trust page lists exactly which protections are available today and which are still planned.',
+    a: 'All accounts confirm a mobile number with an OTP, and photos are reviewed before they go live. The Safety & Trust page explains every protection in detail.',
   },
   {
     q: 'How do I report or block someone?',
@@ -216,5 +216,151 @@ export const faqs = [
   {
     q: 'How do I contact the Humsafar team?',
     a: 'Use the contact form on the Download & Contact page or email our support team. Please include your profile name or ID so we can help faster.',
+  },
+]
+
+/* ------------------------------------------------------------------
+   Full FAQ page (/faq), grouped by topic
+------------------------------------------------------------------- */
+export const faqCategories = [
+  {
+    id: 'registration',
+    title: 'Registration & login',
+    items: [
+      {
+        q: 'Who can register on Humsafar?',
+        a: 'Adults who are looking for marriage and are legally able to marry. A profile can be created by the person themselves, or by a parent, sibling, relative or friend with their knowledge and consent.',
+      },
+      {
+        q: 'How do I create an account?',
+        a: 'Download the Humsafar app, sign up with your mobile number and verify it with the OTP we send. Then add your profile details, photos and partner preferences.',
+      },
+      {
+        q: 'Can I have more than one profile?',
+        a: 'No. Each person can have only one active profile. Duplicate profiles are removed.',
+      },
+      {
+        q: 'I forgot my password. What should I do?',
+        a: 'On the login screen, tap Forgot password and follow the steps. You will receive an OTP on your registered mobile number to set a new password.',
+      },
+      {
+        q: 'Can I change my registered mobile number?',
+        a: 'Contact our support team from your registered email address with your profile ID, and we will help you update it after confirming your identity.',
+      },
+    ],
+  },
+  {
+    id: 'verification',
+    title: 'Verification',
+    items: [
+      {
+        q: 'How are profiles verified?',
+        a: 'Every account confirms its mobile number with an OTP, members confirm their email address, and every profile photo is reviewed by our team before it goes live.',
+      },
+      {
+        q: 'What does the Verified badge mean?',
+        a: 'It shows that the member has completed Humsafar’s verification steps for their account. It does not guarantee everything a member says about themselves, so always verify details independently and involve your family.',
+      },
+      {
+        q: 'Why was my photo rejected?',
+        a: 'Photos are rejected if they are unclear, not of the person the profile is for, inappropriate, group photos, or taken from the internet. Upload a recent, clear photo of yourself and it will be reviewed again.',
+      },
+    ],
+  },
+  {
+    id: 'matching',
+    title: 'Matches & interests',
+    items: [
+      {
+        q: 'How does Humsafar suggest matches?',
+        a: 'Matches are based on the partner preferences you set, such as age, location, education and other details, together with the information in both profiles.',
+      },
+      {
+        q: 'How do I improve my matches?',
+        a: 'Complete your profile, add recent photos, describe yourself and your family in "About me", and keep your partner preferences realistic and up to date.',
+      },
+      {
+        q: 'What happens when I send an interest?',
+        a: 'The member sees your interest in their Received list and can accept or decline it. Once they accept, you can chat privately in the app.',
+      },
+      {
+        q: 'Can I take back an interest or remove a favourite?',
+        a: 'Yes. You can manage the interests you have sent and your favourite profiles from the Interests and Profile sections of the app.',
+      },
+    ],
+  },
+  {
+    id: 'privacy',
+    title: 'Privacy',
+    items: [
+      {
+        q: 'Who can see my phone number?',
+        a: 'Nobody, unless you choose to share it. Your phone number and email are never shown on your profile.',
+      },
+      {
+        q: 'Can I control who sees my photos?',
+        a: 'Yes. In Privacy settings, turn on Photo privacy so that only accepted matches can view your album.',
+      },
+      {
+        q: 'Can I hide my profile or browse privately?',
+        a: 'Yes. You can hide your profile from search results, browse in incognito mode and turn off your online status from Privacy settings.',
+      },
+      {
+        q: 'How do I delete my account and data?',
+        a: 'Go to Settings in the app and choose Delete account, or follow the steps on our Delete Account page. Your profile is removed straight away. Read the Privacy Policy for full details.',
+      },
+    ],
+  },
+  {
+    id: 'payments',
+    title: 'Membership & payments',
+    items: [
+      {
+        q: 'Is Humsafar free?',
+        a: 'Yes, you can create a profile, set preferences, browse matches and send interests for free. Some extra features are available with a Premium membership.',
+      },
+      {
+        q: 'What do I get with Premium?',
+        a: 'The features, price and duration of each Premium plan are shown in the app before you pay, so you can choose the plan that suits you.',
+      },
+      {
+        q: 'How do I pay?',
+        a: 'Premium is purchased securely through Google Play, the Apple App Store or our payment partner. Humsafar does not store your card or bank details.',
+      },
+      {
+        q: 'Can I get a refund?',
+        a: 'Payments are generally non-refundable once a plan is active, except where the app store’s refund policy or the law requires it. If you were charged in error, contact us with your payment details and we will help.',
+      },
+      {
+        q: 'My payment went through but Premium is not active. What should I do?',
+        a: 'Close and reopen the app and check your internet connection. If Premium is still not active after a few minutes, contact support with your profile ID and payment receipt.',
+      },
+    ],
+  },
+  {
+    id: 'troubleshooting',
+    title: 'Troubleshooting',
+    items: [
+      {
+        q: 'I did not receive my OTP.',
+        a: 'Check that your mobile number is correct and has network coverage, wait a minute and tap Resend OTP. If it still does not arrive, contact support.',
+      },
+      {
+        q: 'The app is not loading or keeps closing.',
+        a: 'Update Humsafar to the latest version from your app store, check your internet connection and restart your phone. If the problem continues, contact us with your phone model and a screenshot.',
+      },
+      {
+        q: 'I am not getting notifications.',
+        a: 'Make sure notifications are allowed for Humsafar in your phone settings and in the app’s notification settings, and that battery saver is not blocking the app.',
+      },
+      {
+        q: 'My account was suspended. What can I do?',
+        a: 'Accounts are suspended when our Terms of Use or Community Guidelines are broken. If you believe this was a mistake, contact us with your profile ID and we will review it.',
+      },
+      {
+        q: 'How do I report or block someone?',
+        a: 'Open the member’s profile or your chat with them and choose Report or Block. Blocked members can no longer see your profile or contact you. Our team reviews every report.',
+      },
+    ],
   },
 ]

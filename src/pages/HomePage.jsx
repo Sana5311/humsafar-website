@@ -7,13 +7,12 @@ import {
   Download,
   Eye,
   Flag,
-  Heart,
   Quote,
   ShieldCheck,
   Sparkles,
 } from 'lucide-react'
 import { AppGallery } from '../components/AppScreens'
-import { CtaBand, FaqList, Ornament, SectionHeading } from '../components/ui'
+import { CtaBand, FaqList, LogoMark, Ornament, SectionHeading } from '../components/ui'
 import { faqs, heroImage, homeSteps, testimonials, valueProps } from '../data/content'
 import { safetyTopics } from '../data/safety'
 import { getIcon } from '../lib/icons'
@@ -35,27 +34,26 @@ function HeroVisual() {
       transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
       className="relative mx-auto w-full max-w-[400px]"
     >
-      <div className="absolute -inset-4 rounded-t-full rounded-b-3xl border border-gold/50" aria-hidden="true" />
+      <div className="absolute -inset-4 rounded-t-full rounded-b-3xl border border-accent/50" aria-hidden="true" />
 
-      <div className="relative h-[440px] overflow-hidden rounded-t-full rounded-b-3xl border-[6px] border-white bg-linear-to-b from-maroon to-maroon-deep shadow-2xl shadow-maroon/30 sm:h-[480px]">
+      <div className="relative h-[440px] overflow-hidden rounded-t-full rounded-b-3xl border-[6px] border-white bg-linear-to-b from-primary to-primary-dark shadow-2xl shadow-primary/30 sm:h-[480px]">
         {heroImage.src ? (
           <img src={heroImage.src} alt={heroImage.alt} className="h-full w-full object-cover" />
         ) : (
           <>
-            <div className="absolute inset-4 rounded-t-full rounded-b-2xl border border-gold/40" aria-hidden="true" />
+            <div className="absolute inset-4 rounded-t-full rounded-b-2xl border border-accent/40" aria-hidden="true" />
             <div
-              className="absolute left-1/2 top-1/3 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/20 blur-2xl"
+              className="absolute left-1/2 top-1/3 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/20 blur-2xl"
               aria-hidden="true"
             />
             <div className="relative flex h-full flex-col items-center justify-center gap-5 px-8 text-center">
               <motion.div
                 animate={{ scale: [1, 1.08, 1] }}
                 transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
-                className="grid h-28 w-28 place-items-center rounded-full border border-gold/60 bg-maroon-deep/40"
               >
-                <Heart className="h-14 w-14 text-gold" fill="currentColor" strokeWidth={1} />
+                <LogoMark className="h-40 w-40 rounded-xl shadow-2xl shadow-black/40" alt="Humsafar" />
               </motion.div>
-              <span className="font-script text-4xl text-ivory">
+              <span className="font-script text-4xl text-background">
                 Two hearts.
                 <br />
                 One journey.
@@ -69,11 +67,9 @@ function HeroVisual() {
       <motion.div
         animate={{ y: [0, -8, 0] }}
         transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute -left-2 bottom-12 flex items-center gap-3 rounded-2xl border border-gold/30 bg-white px-4 py-3.5 shadow-xl shadow-ink/10 sm:-left-12"
+        className="absolute -left-2 bottom-12 flex items-center gap-3 rounded-2xl border border-accent/30 bg-white px-4 py-3.5 shadow-xl shadow-ink/10 sm:-left-12"
       >
-        <span className="grid h-10 w-10 place-items-center rounded-full bg-maroon text-gold">
-          <Heart className="h-4 w-4" fill="currentColor" />
-        </span>
+        <LogoMark className="h-10 w-10" />
         <span className="text-left">
           <strong className="block text-sm font-semibold text-ink">Interest accepted</strong>
           <small className="block text-xs text-ink/60">Your story starts here</small>
@@ -83,9 +79,9 @@ function HeroVisual() {
       <motion.div
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute -right-2 top-16 flex items-center gap-3 rounded-2xl border border-gold/30 bg-white px-4 py-3 shadow-xl shadow-ink/10 sm:-right-10"
+        className="absolute -right-2 top-16 flex items-center gap-3 rounded-2xl border border-accent/30 bg-white px-4 py-3 shadow-xl shadow-ink/10 sm:-right-10"
       >
-        <span className="grid h-9 w-9 place-items-center rounded-full bg-gold text-maroon-deep">
+        <span className="grid h-9 w-9 place-items-center rounded-full bg-accent text-primary-dark">
           <ShieldCheck className="h-4 w-4" />
         </span>
         <span className="text-left">
@@ -99,9 +95,9 @@ function HeroVisual() {
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden bg-ivory">
-      <div className="pointer-events-none absolute -right-40 top-10 h-[520px] w-[520px] rounded-full bg-gold/15 blur-3xl" aria-hidden="true" />
-      <div className="pointer-events-none absolute -left-40 bottom-0 h-[380px] w-[380px] rounded-full bg-maroon/10 blur-3xl" aria-hidden="true" />
+    <section className="relative overflow-hidden bg-background">
+      <div className="pointer-events-none absolute -right-40 top-10 h-[520px] w-[520px] rounded-full bg-accent/15 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -left-40 bottom-0 h-[380px] w-[380px] rounded-full bg-primary/10 blur-3xl" aria-hidden="true" />
 
       <div className="relative mx-auto grid max-w-7xl items-center gap-16 px-4 py-14 sm:px-6 md:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:px-8">
         <div className="text-center lg:text-left">
@@ -109,9 +105,9 @@ function Hero() {
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="inline-flex items-center gap-2.5 rounded-full border border-gold/50 bg-white/60 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.25em] text-maroon"
+            className="inline-flex items-center gap-2.5 rounded-full border border-accent/50 bg-white/60 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.25em] text-primary"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-gold" />
+            <span className="h-1.5 w-1.5 rounded-full bg-accent" />
             Marriage-first matchmaking
           </motion.span>
 
@@ -120,10 +116,10 @@ function Hero() {
             initial="hidden"
             animate="visible"
             custom={0.1}
-            className="mt-7 font-heading text-[2.3rem] font-semibold leading-[1.15] text-maroon-deep sm:text-5xl lg:text-[3.4rem]"
+            className="mt-7 font-heading text-[2.3rem] font-semibold leading-[1.15] text-primary-dark sm:text-5xl lg:text-[3.4rem]"
           >
             Your journey to a blessed Nikah
-            <span className="mt-2 block font-script text-[3.4rem] font-normal leading-none text-maroon sm:text-7xl lg:text-[5rem]">
+            <span className="mt-2 block font-script text-[3.4rem] font-normal leading-none text-primary sm:text-7xl lg:text-[5rem]">
               starts here.
             </span>
           </motion.h1>
@@ -164,7 +160,7 @@ function Hero() {
           >
             {['Contact details stay private', 'Photos reviewed', 'Report & block anytime'].map((t) => (
               <li key={t} className="inline-flex items-center gap-2">
-                <CircleCheck className="h-4 w-4 text-maroon" />
+                <CircleCheck className="h-4 w-4 text-primary" />
                 {t}
               </li>
             ))}
@@ -194,13 +190,13 @@ function ValueProposition() {
                 variants={fadeUp}
                 custom={i * 0.1}
                 whileHover={{ y: -6 }}
-                className="group relative overflow-hidden rounded-3xl border border-gold/30 bg-ivory/50 p-7 transition-shadow duration-300 hover:shadow-xl hover:shadow-maroon/10"
+                className="group relative overflow-hidden rounded-3xl border border-accent/30 bg-background/50 p-7 transition-shadow duration-300 hover:shadow-xl hover:shadow-primary/10"
               >
-                <span className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-linear-to-r from-maroon via-gold to-maroon transition-transform duration-500 group-hover:scale-x-100" />
-                <div className="grid h-14 w-14 place-items-center rounded-2xl bg-maroon text-gold">
+                <span className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-linear-to-r from-primary via-accent to-primary transition-transform duration-500 group-hover:scale-x-100" />
+                <div className="grid h-14 w-14 place-items-center rounded-2xl bg-primary text-accent">
                   <Icon className="h-6 w-6" strokeWidth={1.75} />
                 </div>
-                <h3 className="mt-6 font-heading text-lg font-semibold text-maroon-deep">{v.title}</h3>
+                <h3 className="mt-6 font-heading text-lg font-semibold text-primary-dark">{v.title}</h3>
                 <p className="mt-3 text-sm leading-7 text-ink/70">{v.description}</p>
               </motion.article>
             )
@@ -214,14 +210,14 @@ function ValueProposition() {
 /* ---------------- 04 HOW IT WORKS ---------------- */
 function HowItWorks() {
   return (
-    <section className="bg-ivory py-20 sm:py-28">
+    <section className="bg-background py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading label="How It Works" title="Four simple steps" script="to your Humsafar." />
 
         <div className="relative mt-16">
           {/* connecting line on desktop */}
           <span
-            className="absolute left-[12.5%] right-[12.5%] top-8 hidden h-px bg-linear-to-r from-gold/20 via-gold to-gold/20 lg:block"
+            className="absolute left-[12.5%] right-[12.5%] top-8 hidden h-px bg-linear-to-r from-accent/20 via-accent to-accent/20 lg:block"
             aria-hidden="true"
           />
           <ol className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
@@ -229,13 +225,13 @@ function HowItWorks() {
               const Icon = getIcon(step.icon)
               return (
                 <motion.li key={step.title} {...inView} variants={fadeUp} custom={i * 0.1} className="relative text-center">
-                  <span className="relative mx-auto grid h-16 w-16 place-items-center rounded-full border-4 border-ivory bg-maroon text-gold shadow-lg shadow-maroon/20">
+                  <span className="relative mx-auto grid h-16 w-16 place-items-center rounded-full border-4 border-background bg-primary text-accent shadow-lg shadow-primary/20">
                     <Icon className="h-6 w-6" strokeWidth={1.75} />
-                    <span className="absolute -right-2 -top-2 grid h-7 w-7 place-items-center rounded-full border-2 border-ivory bg-gold font-heading text-xs font-bold text-maroon-deep">
+                    <span className="absolute -right-2 -top-2 grid h-7 w-7 place-items-center rounded-full border-2 border-background bg-accent font-heading text-xs font-bold text-primary-dark">
                       {i + 1}
                     </span>
                   </span>
-                  <h3 className="mt-6 font-heading text-lg font-semibold text-maroon-deep">{step.title}</h3>
+                  <h3 className="mt-6 font-heading text-lg font-semibold text-primary-dark">{step.title}</h3>
                   <p className="mx-auto mt-2 max-w-[240px] text-sm leading-7 text-ink/70">{step.text}</p>
                 </motion.li>
               )
@@ -279,7 +275,6 @@ function availableIn(...ids) {
   return safetyTopics
     .filter((t) => ids.includes(t.id))
     .flatMap((t) => t.items)
-    .filter((item) => item.status === 'available')
 }
 
 const trustCards = [
@@ -305,13 +300,13 @@ const trustCards = [
 
 function TrustPrivacy() {
   return (
-    <section className="bg-ivory py-20 sm:py-28">
+    <section className="bg-background py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           label="Trust & Privacy"
           title="Your privacy matters"
           script="at every step."
-          text="Here is what is in place today. Planned protections are listed separately on our Safety & Trust page."
+          text="Here is how Humsafar protects you. See every protection on our Safety & Trust page."
         />
 
         <div className="mt-14 grid gap-6 lg:grid-cols-3">
@@ -323,16 +318,16 @@ function TrustPrivacy() {
                 {...inView}
                 variants={fadeUp}
                 custom={i * 0.1}
-                className="flex flex-col rounded-3xl border border-gold/30 bg-white p-7"
+                className="flex flex-col rounded-3xl border border-accent/30 bg-white p-7"
               >
-                <span className="grid h-12 w-12 place-items-center rounded-xl bg-maroon text-gold">
+                <span className="grid h-12 w-12 place-items-center rounded-xl bg-primary text-accent">
                   <Icon className="h-6 w-6" strokeWidth={1.75} />
                 </span>
-                <h3 className="mt-5 font-heading text-lg font-semibold leading-snug text-maroon-deep">{card.title}</h3>
+                <h3 className="mt-5 font-heading text-lg font-semibold leading-snug text-primary-dark">{card.title}</h3>
                 <ul className="mt-5 flex-1 space-y-4">
                   {card.items.map((item) => (
                     <li key={item.title} className="flex items-start gap-3">
-                      <CircleCheck className="mt-0.5 h-4 w-4 shrink-0 text-maroon" />
+                      <CircleCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                       <span>
                         <span className="block text-sm font-semibold text-ink">{item.title}</span>
                         <span className="mt-0.5 block text-sm leading-6 text-ink/65">{item.description}</span>
@@ -342,7 +337,7 @@ function TrustPrivacy() {
                 </ul>
                 <Link
                   to={card.link}
-                  className="group mt-6 inline-flex items-center gap-2 text-sm font-semibold text-maroon hover:text-maroon-deep"
+                  className="group mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-dark"
                 >
                   Learn more
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -372,10 +367,10 @@ function Testimonials() {
         <SectionHeading label="Stories" title="In their" script="own words." />
         <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((t, i) => (
-            <motion.figure key={t.name + i} {...inView} variants={fadeUp} custom={i * 0.08} className="rounded-3xl border border-gold/30 bg-ivory/50 p-7">
-              <Quote className="h-7 w-7 text-gold" />
+            <motion.figure key={t.name + i} {...inView} variants={fadeUp} custom={i * 0.08} className="rounded-3xl border border-accent/30 bg-background/50 p-7">
+              <Quote className="h-7 w-7 text-accent" />
               <blockquote className="mt-4 text-[15px] leading-8 text-ink/80">{t.quote}</blockquote>
-              <figcaption className="mt-5 font-heading text-sm font-semibold text-maroon-deep">
+              <figcaption className="mt-5 font-heading text-sm font-semibold text-primary-dark">
                 {t.name}
                 {t.detail && <span className="font-sans font-normal text-ink/55"> · {t.detail}</span>}
               </figcaption>
@@ -397,8 +392,8 @@ function FaqPreview() {
           <FaqList items={faqs.filter((f) => f.home)} />
         </motion.div>
         <div className="mt-8 text-center">
-          <Link to="/download#faq" className="group inline-flex items-center gap-2 text-sm font-semibold text-maroon hover:text-maroon-deep">
-            <Sparkles className="h-4 w-4 text-gold" />
+          <Link to="/faq" className="group inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-dark">
+            <Sparkles className="h-4 w-4 text-accent" />
             See all FAQs
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>

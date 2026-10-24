@@ -14,6 +14,7 @@ import {
   TriangleAlert,
 } from 'lucide-react'
 import { FaqList, PageHero, SectionHeading } from '../components/ui'
+import logoMark from '../assets/logo.webp'
 import { faqs } from '../data/content'
 import {
   CONTACT_FORM_ENDPOINT,
@@ -38,25 +39,25 @@ function StoreCard({ item, index }) {
       variants={fadeUp}
       custom={index * 0.1}
       className={`flex flex-col rounded-[2rem] border bg-white p-7 sm:p-9 ${
-        live ? 'border-gold/40 shadow-sm' : 'border-dashed border-gold/60'
+        live ? 'border-accent/40 shadow-sm' : 'border-dashed border-accent/60'
       }`}
     >
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="flex items-center gap-4">
-          <span className="grid h-14 w-14 place-items-center rounded-2xl bg-ink text-ivory">
+          <span className="grid h-14 w-14 place-items-center rounded-2xl bg-ink text-background">
             <Icon className="h-7 w-7" fill={item.id === 'android' ? 'currentColor' : 'none'} />
           </span>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">{item.platform}</p>
-            <h2 className="whitespace-nowrap font-heading text-xl font-semibold text-maroon-deep">{item.store}</h2>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">{item.platform}</p>
+            <h2 className="whitespace-nowrap font-heading text-xl font-semibold text-primary-dark">{item.store}</h2>
           </div>
         </div>
         {live ? (
-          <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-maroon px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-ivory">
+          <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-background">
             <CircleCheck className="h-3.5 w-3.5" /> Live
           </span>
         ) : (
-          <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-dashed border-gold bg-gold/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-maroon-deep">
+          <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-dashed border-accent bg-accent/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-primary-dark">
             <Clock className="h-3.5 w-3.5" /> Coming soon
           </span>
         )}
@@ -65,8 +66,15 @@ function StoreCard({ item, index }) {
       <div className="mt-8 flex flex-1 flex-col items-center justify-center gap-6 sm:flex-row sm:items-center sm:justify-start">
         {live ? (
           <>
-            <div className="rounded-2xl border border-gold/40 bg-white p-3">
-              <QRCodeSVG value={item.url} size={140} fgColor="#561027" bgColor="#ffffff" level="M" />
+            <div className="rounded-2xl border border-accent/40 bg-white p-3">
+              <QRCodeSVG
+                value={item.url}
+                size={140}
+                fgColor="#2D0B59"
+                bgColor="#ffffff"
+                level="H"
+                imageSettings={{ src: logoMark, height: 34, width: 34, excavate: true }}
+              />
             </div>
             <div className="text-center sm:text-left">
               <p className="text-sm leading-7 text-ink/70">
@@ -80,9 +88,9 @@ function StoreCard({ item, index }) {
           </>
         ) : (
           <>
-            <div className="grid h-[166px] w-[166px] shrink-0 place-items-center rounded-2xl border border-dashed border-gold/60 bg-ivory/60 text-center">
+            <div className="grid h-[166px] w-[166px] shrink-0 place-items-center rounded-2xl border border-dashed border-accent/60 bg-background/60 text-center">
               <span>
-                <Clock className="mx-auto h-8 w-8 text-gold" />
+                <Clock className="mx-auto h-8 w-8 text-accent" />
                 <span className="mt-2 block text-xs font-medium text-ink/55">QR code coming soon</span>
               </span>
             </div>
@@ -95,7 +103,7 @@ function StoreCard({ item, index }) {
                 href={`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(
                   `Notify me when the ${item.platform} app launches`,
                 )}`}
-                className="group mt-4 inline-flex items-center gap-2 text-sm font-semibold text-maroon hover:text-maroon-deep"
+                className="group mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-dark"
               >
                 <Bell className="h-4 w-4" />
                 Ask us to notify you
@@ -115,7 +123,7 @@ function StoreCard({ item, index }) {
 const topics = ['General question', 'Account help', 'Safety concern', 'App download', 'Feedback']
 
 const fieldClass =
-  'mt-2 w-full rounded-xl border border-gold/40 bg-white px-4 py-3 text-sm text-ink placeholder:text-ink/40 transition-colors focus:border-maroon focus:outline-none focus:ring-2 focus:ring-maroon/15'
+  'mt-2 w-full rounded-xl border border-accent/40 bg-white px-4 py-3 text-sm text-ink placeholder:text-ink/40 transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/15'
 
 function ContactForm() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', topic: topics[0], message: '' })
@@ -162,11 +170,11 @@ function ContactForm() {
 
   if (state === 'sent') {
     return (
-      <div className="flex h-full flex-col items-center justify-center rounded-[2rem] border border-gold/40 bg-white p-10 text-center">
-        <span className="grid h-16 w-16 place-items-center rounded-full bg-maroon text-gold">
+      <div className="flex h-full flex-col items-center justify-center rounded-[2rem] border border-accent/40 bg-white p-10 text-center">
+        <span className="grid h-16 w-16 place-items-center rounded-full bg-primary text-accent">
           <CircleCheck className="h-8 w-8" />
         </span>
-        <h3 className="mt-6 font-heading text-2xl font-semibold text-maroon-deep">Thank you!</h3>
+        <h3 className="mt-6 font-heading text-2xl font-semibold text-primary-dark">Thank you!</h3>
         <p className="mt-3 max-w-sm text-sm leading-7 text-ink/70">
           {CONTACT_FORM_ENDPOINT
             ? 'Your message has been sent. Our team will reply to your email.'
@@ -175,7 +183,7 @@ function ContactForm() {
         <button
           type="button"
           onClick={() => setState('idle')}
-          className="mt-6 text-sm font-semibold text-maroon hover:text-maroon-deep"
+          className="mt-6 text-sm font-semibold text-primary hover:text-primary-dark"
         >
           Send another message
         </button>
@@ -184,7 +192,7 @@ function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-[2rem] border border-gold/40 bg-white p-6 sm:p-9">
+    <form onSubmit={handleSubmit} className="rounded-[2rem] border border-accent/40 bg-white p-6 sm:p-9">
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="block text-sm font-medium text-ink/80">
           Full name *
@@ -221,7 +229,7 @@ function ContactForm() {
       </div>
 
       {state === 'error' && (
-        <p className="mt-5 flex items-start gap-2 rounded-xl bg-maroon/5 p-3 text-sm text-maroon" role="alert">
+        <p className="mt-5 flex items-start gap-2 rounded-xl bg-primary/5 p-3 text-sm text-primary" role="alert">
           <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" />
           Sorry, your message could not be sent. Please try again or email {SUPPORT_EMAIL}.
         </p>
@@ -244,9 +252,9 @@ function ContactForm() {
   )
 }
 
-function ContactSection() {
+export function ContactSection() {
   return (
-    <section id="contact" className="bg-ivory py-20 sm:py-28">
+    <section id="contact" className="bg-background py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           label="Contact Us"
@@ -259,37 +267,37 @@ function ContactSection() {
           <motion.div {...inView} variants={fadeUp} className="space-y-4">
             <a
               href={`mailto:${SUPPORT_EMAIL}`}
-              className="group flex items-start gap-4 rounded-3xl border border-gold/40 bg-white p-6 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-maroon/10"
+              className="group flex items-start gap-4 rounded-3xl border border-accent/40 bg-white p-6 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/10"
             >
-              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-maroon text-gold">
+              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-primary text-accent">
                 <Mail className="h-5 w-5" />
               </span>
               <span className="min-w-0">
-                <span className="block text-xs font-semibold uppercase tracking-wider text-gold">Email support</span>
-                <span className="mt-1 block break-all font-medium text-maroon-deep">{SUPPORT_EMAIL}</span>
+                <span className="block text-xs font-semibold uppercase tracking-wider text-accent">Email support</span>
+                <span className="mt-1 block break-all font-medium text-primary-dark">{SUPPORT_EMAIL}</span>
               </span>
             </a>
 
             {SUPPORT_PHONE && (
               <a
                 href={`tel:${SUPPORT_PHONE.replace(/\s/g, '')}`}
-                className="group flex items-start gap-4 rounded-3xl border border-gold/40 bg-white p-6 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-maroon/10"
+                className="group flex items-start gap-4 rounded-3xl border border-accent/40 bg-white p-6 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/10"
               >
-                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-maroon text-gold">
+                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-primary text-accent">
                   <Phone className="h-5 w-5" />
                 </span>
                 <span>
-                  <span className="block text-xs font-semibold uppercase tracking-wider text-gold">Call us</span>
-                  <span className="mt-1 block font-medium text-maroon-deep">{SUPPORT_PHONE}</span>
+                  <span className="block text-xs font-semibold uppercase tracking-wider text-accent">Call us</span>
+                  <span className="mt-1 block font-medium text-primary-dark">{SUPPORT_PHONE}</span>
                 </span>
               </a>
             )}
 
-            <div className="rounded-3xl bg-linear-to-br from-maroon to-maroon-deep p-6 text-ivory">
+            <div className="rounded-3xl bg-linear-to-br from-primary to-primary-dark p-6 text-background">
               <p className="font-heading text-base font-semibold">Safety concern?</p>
-              <p className="mt-2 text-sm leading-7 text-ivory/80">
+              <p className="mt-2 text-sm leading-7 text-background/80">
                 Block and report the member in the app first, then tell us what
-                happened. If you are in danger, call <strong className="text-gold">112</strong>.
+                happened. If you are in danger, call <strong className="text-accent">112</strong>.
               </p>
             </div>
           </motion.div>
@@ -311,7 +319,7 @@ export default function DownloadPage() {
         label="Download & Contact"
         title="Get Humsafar"
         script="on your phone."
-        text="Download the Humsafar – Daata app for Android or iPhone, and reach our team whenever you need help."
+        text="Download the Humsafar app for Android or iPhone, and reach our team whenever you need help."
       />
 
       <section id="download-app" className="bg-white py-20 sm:py-24">

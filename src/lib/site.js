@@ -8,6 +8,14 @@ import { Apple, Play } from 'lucide-react'
 export const SUPPORT_EMAIL = 'YOUR-OFFICIAL-EMAIL@example.com'
 export const SUPPORT_PHONE = '' // e.g. '+91 98765 43210'
 
+// Legal details shown on the Privacy Policy, Terms and Contact pages.
+// Fill these in before publishing. Empty values are hidden automatically.
+export const LEGAL_ENTITY = 'Humsafar' // registered company / owner name
+export const LEGAL_ADDRESS = '' // registered postal address
+export const GRIEVANCE_OFFICER = '' // name of the Grievance Officer
+export const GRIEVANCE_EMAIL = '' // defaults to SUPPORT_EMAIL when empty
+export const LEGAL_LAST_UPDATED = 'October 2026'
+
 // App store links. Leave empty ('') while a listing is not live yet:
 // the site then shows a "Coming soon" state instead of a button/QR code.
 export const PLAY_STORE_URL = ''
@@ -42,8 +50,8 @@ export const footerColumns = [
       { label: 'About', to: '/about' },
       { label: 'How It Works', to: '/how-it-works' },
       { label: 'Safety', to: '/safety' },
-      { label: 'Contact', to: '/download#contact' },
-      { label: 'FAQ', to: '/download#faq' },
+      { label: 'Contact', to: '/contact' },
+      { label: 'FAQ', to: '/faq' },
     ],
   },
   {
@@ -76,7 +84,7 @@ export const inView = {
 }
 
 export const primaryBtn =
-  'group inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-maroon px-7 py-3 text-sm font-medium text-ivory shadow-lg shadow-maroon/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-maroon-deep hover:shadow-maroon/30'
+  'group inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-medium text-background shadow-lg shadow-primary/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-dark hover:shadow-primary/30'
 
 export const secondaryBtn =
-  'group inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-gold/70 bg-transparent px-7 py-3 text-sm font-medium text-maroon transition-all duration-300 hover:-translate-y-0.5 hover:border-maroon hover:bg-maroon/5'
+  'group inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-accent/70 bg-transparent px-7 py-3 text-sm font-medium text-primary transition-all duration-300 hover:-translate-y-0.5 hover:border-primary hover:bg-primary/5'

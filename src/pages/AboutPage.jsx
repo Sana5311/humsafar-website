@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight, CircleCheck, Heart, Target } from 'lucide-react'
-import { CtaBand, Ornament, PageHero, SectionHeading } from '../components/ui'
+import { CtaBand, LogoMark, Ornament, PageHero, SectionHeading } from '../components/ui'
 import { audience, values } from '../data/content'
 import { getIcon } from '../lib/icons'
 import { fadeUp, inView, secondaryBtn } from '../lib/site'
@@ -30,9 +30,9 @@ function WhyWeExist() {
     <section className="bg-white py-20 sm:py-28">
       <div className="mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
         <motion.div {...inView} variants={fadeUp}>
-          <h2 className="font-heading text-3xl font-semibold leading-tight text-maroon-deep sm:text-4xl">
+          <h2 className="font-heading text-3xl font-semibold leading-tight text-primary-dark sm:text-4xl">
             Why Humsafar
-            <span className="mt-2 block font-script text-5xl font-normal text-maroon sm:text-6xl">exists.</span>
+            <span className="mt-2 block font-script text-5xl font-normal text-primary sm:text-6xl">exists.</span>
           </h2>
           <div className="mt-6 space-y-5 text-[15px] leading-8 text-ink/75">
             <p>
@@ -41,8 +41,8 @@ function WhyWeExist() {
               endless swiping, unclear intentions and too little privacy.
             </p>
             <p>
-              <strong className="font-semibold text-maroon-deep">Humsafar</strong> means
-              &ldquo;companion on life&apos;s journey&rdquo;. We created Humsafar – Daata
+              <strong className="font-semibold text-primary-dark">Humsafar</strong> means
+              &ldquo;companion on life&apos;s journey&rdquo;. We created Humsafar
               for people who want exactly that: a serious, respectful place to find
               someone to share their life with.
             </p>
@@ -53,23 +53,23 @@ function WhyWeExist() {
           {...inView}
           variants={fadeUp}
           custom={0.1}
-          className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-maroon to-maroon-deep p-8 text-ivory sm:p-10"
+          className="relative overflow-hidden rounded-[2rem] bg-linear-to-br from-primary to-primary-dark p-8 text-background sm:p-10"
         >
           <div
-            className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full border border-gold/20"
+            className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full border border-accent/20"
             aria-hidden="true"
           />
-          <span className="grid h-12 w-12 place-items-center rounded-xl bg-gold text-maroon-deep">
+          <span className="grid h-12 w-12 place-items-center rounded-xl bg-accent text-primary-dark">
             <Target className="h-6 w-6" />
           </span>
-          <p className="mt-6 text-xs font-semibold uppercase tracking-[0.28em] text-gold">Our mission</p>
+          <p className="mt-6 text-xs font-semibold uppercase tracking-[0.28em] text-accent">Our mission</p>
           <p className="mt-4 font-heading text-2xl font-semibold leading-snug sm:text-[1.7rem]">
             To help people who are ready for marriage find a compatible life
             partner, with trust, privacy and respect at every step.
           </p>
-          <div className="mt-8 flex items-center gap-3 text-gold">
-            <span className="h-px w-10 bg-gold" />
-            <Heart className="h-4 w-4" fill="currentColor" />
+          <div className="mt-8 flex items-center gap-3 text-accent">
+            <span className="h-px w-10 bg-accent" />
+            <LogoMark className="h-9 w-9" />
           </div>
         </motion.div>
       </div>
@@ -79,7 +79,7 @@ function WhyWeExist() {
 
 function Values() {
   return (
-    <section className="bg-ivory py-20 sm:py-28">
+    <section className="bg-background py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading label="Our Values" title="What we" script="stand for." />
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -91,12 +91,12 @@ function Values() {
                 {...inView}
                 variants={fadeUp}
                 custom={i * 0.08}
-                className="rounded-3xl border border-gold/30 bg-white p-7 text-center"
+                className="rounded-3xl border border-accent/30 bg-white p-7 text-center"
               >
-                <span className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-maroon text-gold">
+                <span className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-primary text-accent">
                   <Icon className="h-6 w-6" strokeWidth={1.75} />
                 </span>
-                <h3 className="mt-5 font-heading text-lg font-semibold text-maroon-deep">{v.title}</h3>
+                <h3 className="mt-5 font-heading text-lg font-semibold text-primary-dark">{v.title}</h3>
                 <p className="mt-3 text-sm leading-7 text-ink/70">{v.description}</p>
               </motion.div>
             )
@@ -114,8 +114,8 @@ function Audience() {
         <SectionHeading label="Who It's For" title="Made for people" script="ready for marriage." />
         <motion.ul {...inView} variants={fadeUp} className="mt-12 grid gap-4 sm:grid-cols-2">
           {audience.map((a) => (
-            <li key={a} className="flex items-start gap-3 rounded-2xl border border-gold/30 bg-ivory/60 p-5">
-              <CircleCheck className="mt-0.5 h-5 w-5 shrink-0 text-maroon" />
+            <li key={a} className="flex items-start gap-3 rounded-2xl border border-accent/30 bg-background/60 p-5">
+              <CircleCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
               <span className="text-sm leading-7 text-ink/80">{a}</span>
             </li>
           ))}
@@ -125,7 +125,7 @@ function Audience() {
           variants={fadeUp}
           className="mt-8 text-center text-sm leading-7 text-ink/60"
         >
-          Humsafar – Daata is for adults (18+) looking for marriage. It is not a casual dating app.
+          Humsafar is for adults (18+) looking for marriage. It is not a casual dating app.
         </motion.p>
       </div>
     </section>
@@ -134,7 +134,7 @@ function Audience() {
 
 function Approach() {
   return (
-    <section className="bg-ivory py-20 sm:py-28">
+    <section className="bg-background py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           label="Our Approach"
@@ -152,11 +152,11 @@ function Approach() {
               {...inView}
               variants={fadeUp}
               custom={(i % 2) * 0.08}
-              className="flex gap-5 rounded-3xl border border-gold/30 bg-white p-7"
+              className="flex gap-5 rounded-3xl border border-accent/30 bg-white p-7"
             >
-              <span className="font-heading text-3xl font-semibold text-gold">0{i + 1}</span>
+              <span className="font-heading text-3xl font-semibold text-accent">0{i + 1}</span>
               <div>
-                <h3 className="font-heading text-lg font-semibold text-maroon-deep">{a.title}</h3>
+                <h3 className="font-heading text-lg font-semibold text-primary-dark">{a.title}</h3>
                 <p className="mt-2 text-sm leading-7 text-ink/70">{a.text}</p>
               </div>
             </motion.div>
@@ -181,7 +181,7 @@ export default function AboutPage() {
         label="About Humsafar"
         title="A companion"
         script="for life's journey."
-        text="Humsafar – Daata is a marriage-first matchmaking app. We help people who are ready for marriage find a compatible life partner, respectfully, privately and with their families by their side."
+        text="Humsafar is a marriage-first matchmaking app. We help people who are ready for marriage find a compatible life partner, respectfully, privately and with their families by their side."
       />
       <WhyWeExist />
       <Values />

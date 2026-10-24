@@ -1,192 +1,340 @@
 import { motion } from 'framer-motion'
 import {
-  Ban,
-  Bell,
-  Check,
+  ArrowLeft,
+  BadgeCheck,
+  Camera,
   ChevronRight,
+  Crown,
+  Download,
+  Eye,
   EyeOff,
   Heart,
+  Image as ImageIcon,
   LockKeyhole,
   MapPin,
-  Pencil,
-  Send,
-  ShieldCheck,
-  Sparkles,
-  Trash2,
-  X,
+  MessageCircle,
+  Mic,
+  Moon,
+  Paperclip,
+  Phone,
+  SendHorizontal,
+  Share2,
+  Shield,
+  SlidersHorizontal,
+  Smile,
+  UserRoundX,
+  Users,
 } from 'lucide-react'
 import { appScreenshots } from '../data/content'
 import { fadeUp, inView } from '../lib/site'
 
 /* ==================================================================
-   App preview screens, drawn in code.
-   These are ILLUSTRATIVE. To show real app screens instead, add your
-   screenshots to `appScreenshots` in src/data/content.js.
+   App preview screens, drawn in code to match the Humsafar app UI
+   (purple gradient header with gold edge, gold accents, white cards).
+   Sample names only — no real members or photos.
+   To show real screenshots instead, fill `appScreenshots` in
+   src/data/content.js.
    ================================================================== */
 
-function ScreenHeader({ title }) {
+const goldGradient = 'bg-linear-to-r from-accent-dark via-accent-light to-accent'
+
+/* Soft placeholder "photo" — gradient + initial, no real faces */
+const tones = [
+  'from-[#E9D8F5] to-[#B79AD6]',
+  'from-[#F6E7C1] to-[#D9B867]',
+  'from-[#D9CFF0] to-[#8F74BF]',
+  'from-[#F3DCE6] to-[#C99BB3]',
+  'from-[#DCE8F3] to-[#9DB4CF]',
+  'from-[#EFE3D3] to-[#C7A98A]',
+]
+
+function Avatar({ name, i = 0, className = 'h-9 w-9 text-sm', ring = true, online = false }) {
   return (
-    <div className="flex items-center justify-between bg-maroon px-4 pb-3 pt-9 text-ivory">
-      <span className="font-heading text-sm font-semibold tracking-wide">{title}</span>
-      <Heart className="h-4 w-4 text-gold" fill="currentColor" />
+    <span className="relative shrink-0">
+      <span
+        className={`grid place-items-center rounded-full bg-linear-to-br font-semibold text-white ${tones[i % tones.length]} ${
+          ring ? 'ring-2 ring-accent ring-offset-1 ring-offset-white' : ''
+        } ${className}`}
+      >
+        {name[0]}
+      </span>
+      {online && (
+        <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full border border-white bg-online" />
+      )}
+    </span>
+  )
+}
+
+function StatusBar() {
+  return (
+    <div className="flex items-center justify-between px-4 pt-2 text-[8px] font-medium text-white/90">
+      <span>8:03</span>
+      <span className="flex items-center gap-1">
+        <span className="tracking-tighter">▂▄▆</span>
+        <span className="rounded-sm bg-[#9B5CF6] px-0.5 leading-tight">98</span>
+      </span>
     </div>
   )
 }
 
-function ProfileScreen() {
+function CircleBtn({ icon: Icon }) {
   return (
-    <div className="flex h-full flex-col bg-ivory">
-      <ScreenHeader title="My Profile" />
-      <div className="p-3">
-        <div className="flex items-center gap-3 rounded-2xl bg-white p-3 shadow-sm">
-          <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-linear-to-br from-gold/60 to-maroon/60 font-heading text-lg font-semibold text-white">
-            P
+    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full border border-accent text-accent">
+      <Icon className="h-3.5 w-3.5" />
+    </span>
+  )
+}
+
+/* Purple gradient header with the gold rounded bottom edge */
+function AppHeader({ title, subtitle, left, right }) {
+  return (
+    <div className="relative z-10 rounded-b-[18px] border-x-[1.5px] border-b-[1.5px] border-accent bg-linear-to-br from-primary-dark via-primary to-secondary pb-3 shadow-md shadow-primary/30">
+      <StatusBar />
+      <div className="mt-3 flex items-center px-3">
+        <span className="w-7">{left}</span>
+        <div className="flex-1 text-center">
+          <p className="text-[13px] font-semibold leading-tight text-white">{title}</p>
+          {subtitle && <p className="mt-0.5 text-[8px] text-white/70">{subtitle}</p>}
+        </div>
+        <span className="flex w-7 justify-end">{right}</span>
+      </div>
+    </div>
+  )
+}
+
+function BottomNav({ active }) {
+  const items = [
+    { key: 'home', label: 'Home' },
+    { key: 'matches', label: 'Matches', icon: Users },
+    { key: 'interest', label: 'Interest', icon: Heart },
+    { key: 'chat', label: 'Chat', icon: MessageCircle },
+    { key: 'premium', label: 'Premium', icon: Crown },
+  ]
+  return (
+    <div className="absolute inset-x-1.5 bottom-1.5 z-10 flex justify-around rounded-2xl border-[1.5px] border-accent bg-primary py-1.5">
+      {items.map(({ key, label, icon: Icon }) => {
+        const on = key === active
+        return (
+          <span key={key} className={`flex flex-col items-center gap-0.5 text-[7px] ${on ? 'text-accent' : 'text-white/75'}`}>
+            {Icon ? (
+              <Icon className="h-3.5 w-3.5" strokeWidth={1.8} />
+            ) : (
+              <span className="bg-linear-to-b from-accent-light to-accent-dark bg-clip-text font-heading text-[13px] font-bold leading-[14px] text-transparent">
+                H
+              </span>
+            )}
+            {label}
           </span>
-          <div className="min-w-0 flex-1">
-            <p className="text-sm font-semibold text-ink">Homa, 26</p>
-            <p className="text-[10px] text-ink/60">Teacher · Aligarh</p>
-            <span className="mt-1 inline-flex items-center gap-1 rounded-full bg-maroon/10 px-2 py-0.5 text-[9px] font-semibold text-maroon">
-              <ShieldCheck className="h-3 w-3" /> Mobile verified
+        )
+      })}
+    </div>
+  )
+}
+
+/* ---------------------------------------------------------------- */
+
+function ProfileScreen() {
+  const rows = [
+    { icon: Crown, label: 'Membership Status', value: 'FREE' },
+    { icon: Heart, label: 'Favourite Profiles' },
+    { icon: BadgeCheck, label: 'Verification Status', value: 'Verified' },
+    { icon: Shield, label: 'Privacy' },
+    { icon: Camera, label: 'Upload Photos' },
+  ]
+  return (
+    <div className="flex h-full flex-col bg-background">
+      <div className="rounded-b-[22px] border-x-[1.5px] border-b-[1.5px] border-accent bg-linear-to-b from-primary-dark via-primary to-secondary pb-4">
+        <StatusBar />
+        <div className="mt-2 flex justify-between px-3">
+          <CircleBtn icon={ArrowLeft} />
+          <CircleBtn icon={Moon} />
+        </div>
+        <div className="-mt-3 flex flex-col items-center text-center">
+          <span className="relative">
+            <span className="grid h-16 w-16 place-items-center rounded-full border-2 border-accent bg-linear-to-br from-[#E9D8F5] to-[#8F74BF] text-xl font-semibold text-white">
+              A
+            </span>
+            <span className="absolute -bottom-0.5 -right-0.5 grid h-5 w-5 place-items-center rounded-full bg-accent text-primary-dark">
+              <Camera className="h-2.5 w-2.5" />
+            </span>
+          </span>
+          <p className="mt-2 text-[14px] font-bold text-white">Ahmed Raza</p>
+          <p className="text-[9px] font-semibold tracking-wide text-accent">HS5810053</p>
+          <p className="mt-0.5 text-[8px] text-white/75">Free Account · 25 · Hyderabad</p>
+          <div className="mt-1.5 flex gap-1.5 text-[7px] font-semibold">
+            <span className="inline-flex items-center gap-0.5 rounded-full bg-success px-2 py-0.5 text-white">
+              <BadgeCheck className="h-2.5 w-2.5" /> Verified
+            </span>
+            <span className={`inline-flex items-center gap-0.5 rounded-full px-2 py-0.5 text-primary-dark ${goldGradient}`}>
+              <Crown className="h-2.5 w-2.5" /> FREE
             </span>
           </div>
-          <Pencil className="h-4 w-4 text-ink/40" />
+          <p className="mt-2 text-[8px] text-accent-light">Profile 85% complete</p>
+          <div className="mt-1 h-1 w-3/4 overflow-hidden rounded-full bg-white/20">
+            <div className="h-full w-[85%] rounded-full bg-accent" />
+          </div>
         </div>
+      </div>
 
-        <div className="mt-3 rounded-2xl bg-white p-3 shadow-sm">
-          <div className="flex items-center justify-between text-[10px]">
-            <span className="font-semibold text-ink">Profile complete</span>
-            <span className="font-semibold text-maroon">80%</span>
-          </div>
-          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-ivory">
-            <div className="h-full w-4/5 rounded-full bg-linear-to-r from-maroon to-gold" />
-          </div>
-          <p className="mt-2 text-[9px] text-ink/55">Add family details to get better matches</p>
+      <div className="px-2.5 pt-2.5">
+        <div className={`rounded-xl py-2 text-center text-[10px] font-bold text-primary-dark shadow-md shadow-accent/30 ${goldGradient}`}>
+          Edit Profile
         </div>
-
-        {[
-          ['About me', 'Family-oriented, loves music and travel.'],
-          ['Partner preferences', '27–32 · Andhra Pradesh, Telangana · Graduate'],
-        ].map(([title, text]) => (
-          <div key={title} className="mt-3 rounded-2xl bg-white p-3 shadow-sm">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-gold">{title}</p>
-            <p className="mt-1 text-[11px] leading-snug text-ink/75">{text}</p>
+        <div className="mt-2.5 overflow-hidden rounded-xl border border-line bg-white shadow-sm">
+          {rows.map(({ icon: Icon, label, value }) => (
+            <div key={label} className="flex items-center gap-2 border-b border-line px-2.5 py-[7px] last:border-b-0">
+              <span className="grid h-5 w-5 place-items-center rounded-full border border-accent/70 bg-accent/10 text-accent">
+                <Icon className="h-2.5 w-2.5" />
+              </span>
+              <span className="flex-1 text-[9px] font-medium text-ink">{label}</span>
+              {value && <span className="text-[7px] font-semibold text-accent">{value}</span>}
+              <ChevronRight className="h-2.5 w-2.5 text-accent" />
+            </div>
+          ))}
+          <div className="grid grid-cols-2 border-t border-line text-[8px] text-ink">
+            <span className="flex items-center justify-center gap-1 border-r border-line py-1.5">
+              <Download className="h-2.5 w-2.5 text-accent" /> Download
+            </span>
+            <span className="flex items-center justify-center gap-1 py-1.5">
+              <Share2 className="h-2.5 w-2.5 text-accent" /> Share
+            </span>
           </div>
-        ))}
+        </div>
       </div>
     </div>
   )
 }
 
 function MatchScreen() {
+  const people = [
+    ['Ayesha Khan', 26, 'Software Engineer', 'Mumbai', true, true],
+    ['Omar Siddiqui', 29, 'Doctor', 'Delhi', true, false],
+    ['Fatima Noor', 24, 'Designer', 'Hyderabad', false, true],
+    ['Zain Ahmed', 31, 'Business Owner', 'Bangalore', true, false],
+    ['Maryam Ali', 27, 'Teacher', 'Lucknow', false, false],
+    ['Hassan Rahman', 28, 'Engineer', 'Chennai', true, false],
+  ]
   return (
-    <div className="flex h-full flex-col bg-ivory">
-      <ScreenHeader title="Matches" />
-      <div className="flex-1 p-3">
-        <div className="overflow-hidden rounded-2xl bg-white shadow-md">
-          <div className="relative grid h-32 place-items-center bg-linear-to-br from-gold/40 via-maroon/30 to-maroon/60">
-            <span className="grid h-16 w-16 place-items-center rounded-full bg-white/70 font-heading text-xl font-semibold text-maroon">
-              A
+    <div className="relative flex h-full flex-col bg-background">
+      <AppHeader title="Matches" subtitle="10 profiles for you" right={<CircleBtn icon={SlidersHorizontal} />} />
+      <div className="grid grid-cols-2 gap-2 p-2.5">
+        {people.map(([name, age, job, city, premium, liked], i) => (
+          <div
+            key={name}
+            className={`relative h-[118px] overflow-hidden rounded-xl bg-linear-to-br shadow-md ${tones[i % tones.length]}`}
+          >
+            <span className="absolute inset-0 grid place-items-center pb-8 text-4xl font-semibold text-white/60">
+              {name[0]}
             </span>
-            <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-white/90 px-2 py-0.5 text-[9px] font-semibold text-maroon">
-              <ShieldCheck className="h-3 w-3" /> Verified
+            <div className="absolute inset-x-0 bottom-0 h-3/5 bg-linear-to-t from-primary-dark/90 to-transparent" />
+            <span className="absolute left-1.5 top-1.5 grid h-3.5 w-5 place-items-center rounded-full bg-success text-white">
+              <BadgeCheck className="h-2 w-2" />
             </span>
-            <span className="absolute bottom-2 right-2 inline-flex items-center gap-1 rounded-full bg-maroon/80 px-2 py-0.5 text-[9px] text-ivory">
-              <EyeOff className="h-3 w-3" /> Photo private
+            {premium && (
+              <span className={`absolute left-1.5 top-6 inline-flex items-center gap-0.5 rounded-full px-1.5 py-px text-[6px] font-bold text-primary-dark ${goldGradient}`}>
+                <Crown className="h-2 w-2" /> PREMIUM
+              </span>
+            )}
+            <span className="absolute right-1.5 top-1.5 grid h-4 w-4 place-items-center rounded-full bg-white/30">
+              <Heart className={`h-2.5 w-2.5 ${liked ? 'text-error' : 'text-white'}`} fill={liked ? 'currentColor' : 'none'} />
             </span>
-          </div>
-          <div className="p-3">
-            <p className="text-sm font-semibold text-ink">Aliya, 27</p>
-            <p className="mt-0.5 flex items-center gap-1 text-[10px] text-ink/60">
-              <MapPin className="h-3 w-3" /> Software Engineer · Hyderabad
-            </p>
-            <div className="mt-2 flex flex-wrap gap-1">
-              {['Family-oriented', 'Vegetarian', 'Telugu'].map((t) => (
-                <span key={t} className="rounded-full bg-ivory px-2 py-0.5 text-[9px] text-maroon">
-                  {t}
-                </span>
-              ))}
+            <div className="absolute inset-x-1.5 bottom-1.5 text-white">
+              <p className="text-[8px] font-semibold leading-tight">
+                {name}, {age}
+              </p>
+              <p className="truncate text-[7px] text-white/80">{job}</p>
+              <p className="flex items-center gap-0.5 text-[7px] text-accent-light">
+                <MapPin className="h-2 w-2" /> {city}
+              </p>
             </div>
-            <div className="mt-3 flex items-center gap-1.5 rounded-lg bg-gold/15 px-2 py-1.5 text-[10px] text-maroon-deep">
-              <Sparkles className="h-3 w-3 text-gold" /> Matches 8 of your preferences
-            </div>
           </div>
-        </div>
-        <div className="mt-3 grid grid-cols-[auto_1fr] gap-2">
-          <span className="grid h-10 w-10 place-items-center rounded-full border border-ink/15 bg-white text-ink/60">
-            <X className="h-4 w-4" />
-          </span>
-          <span className="inline-flex items-center justify-center gap-1.5 rounded-full bg-maroon text-xs font-medium text-ivory">
-            <Heart className="h-3.5 w-3.5" fill="currentColor" /> Send Interest
-          </span>
-        </div>
+        ))}
       </div>
+      <BottomNav active="matches" />
     </div>
   )
 }
 
 function InterestsScreen() {
   const people = [
-    ['R', 'Ali Saqlain, 30', 'Engineer · Aliagrh'],
-    ['K', 'Okasha, 29', 'Doctor · Chennai'],
-    ['S', 'Sameer, 31', 'Architect · Bengaluru'],
+    ['Ayesha Khan, 26', 'Mumbai · 2h ago'],
+    ['Sana Qureshi, 25', 'Dubai · 5h ago'],
+    ['Zoya Begum, 27', 'Pune · 1d ago'],
   ]
   return (
-    <div className="flex h-full flex-col bg-ivory">
-      <ScreenHeader title="Interests" />
-      <div className="flex gap-2 px-3 pt-3 text-[10px]">
-        <span className="rounded-full bg-maroon px-3 py-1 text-ivory">Received</span>
-        <span className="rounded-full bg-white px-3 py-1 text-ink/60">Sent</span>
-        <span className="rounded-full bg-white px-3 py-1 text-ink/60">Accepted</span>
+    <div className="relative flex h-full flex-col bg-background">
+      <AppHeader title="Interests" subtitle="People who matter" />
+      <div className="mx-2.5 mt-2.5 grid grid-cols-3 rounded-xl border-[1.5px] border-accent bg-white p-0.5 text-center text-[8px]">
+        <span className="rounded-lg bg-primary py-1 font-semibold text-accent">Received</span>
+        <span className="py-1 text-ink-soft">Sent</span>
+        <span className="py-1 text-ink-soft">Accepted</span>
       </div>
-      <div className="space-y-2 p-3">
-        {people.map(([initial, name, meta]) => (
-          <div key={name} className="rounded-xl bg-white p-2.5 shadow-sm">
-            <div className="flex items-center gap-2.5">
-              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-linear-to-br from-gold/50 to-maroon/50 font-heading text-sm font-semibold text-white">
-                {initial}
-              </span>
-              <div className="min-w-0">
-                <p className="text-xs font-semibold text-ink">{name}</p>
-                <p className="truncate text-[9px] text-ink/60">{meta}</p>
+      <div className="space-y-2 p-2.5">
+        {people.map(([name, meta], i) => (
+          <div key={name} className="rounded-xl border-[1.5px] border-accent bg-white p-2">
+            <div className="flex items-center gap-2">
+              <Avatar name={name} i={i} className="h-8 w-8 text-xs" />
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-[10px] font-semibold text-primary">{name}</p>
+                <p className="text-[7px] text-muted">{meta}</p>
               </div>
+              <span className="grid h-5 w-5 place-items-center rounded-full border border-online bg-online/10 text-online">
+                <Phone className="h-2.5 w-2.5" />
+              </span>
             </div>
-            <div className="mt-2 grid grid-cols-2 gap-1.5 text-[10px]">
-              <span className="rounded-full bg-maroon py-1 text-center text-ivory">Accept</span>
-              <span className="rounded-full border border-ink/15 py-1 text-center text-ink/60">Decline</span>
+            <div className="mt-2 grid grid-cols-3 gap-1 text-[7px] font-semibold">
+              <span className={`rounded-lg border border-primary-dark py-1 text-center text-primary-dark ${goldGradient}`}>Accept</span>
+              <span className="rounded-lg border border-accent bg-white py-1 text-center text-primary-dark">Decline</span>
+              <span className="inline-flex items-center justify-center gap-0.5 rounded-lg border border-accent bg-primary py-1 text-white">
+                <MessageCircle className="h-2 w-2" /> Contact
+              </span>
             </div>
           </div>
         ))}
       </div>
+      <BottomNav active="interest" />
     </div>
   )
 }
 
 function ChatScreen() {
+  const msgs = [
+    ['in', 'Assalamualaikum, hope you are doing well.', '10:20 AM'],
+    ['out', 'Wa alaikum assalam! Yes, Alhamdulillah. How about you?', '10:25 AM'],
+    ['in', 'I am good, thank you. I enjoyed reading your profile.', '10:30 AM'],
+    ['out', 'That means a lot. Would love to know more about your family.', '10:35 AM'],
+    ['in', 'That sounds wonderful, Alhamdulillah.', '10:42 AM'],
+  ]
   return (
-    <div className="flex h-full flex-col bg-ivory">
-      <ScreenHeader title="Ali" />
-      <div className="mx-3 mt-3 flex items-center gap-1.5 rounded-lg bg-white px-2.5 py-1.5 text-[9px] text-ink/70">
-        <LockKeyhole className="h-3 w-3 text-maroon" />
-        Private chat · your phone number stays hidden
+    <div className="flex h-full flex-col bg-background">
+      <AppHeader
+        title="Ayesha Khan"
+        subtitle="Online"
+        left={<CircleBtn icon={ArrowLeft} />}
+        right={<Avatar name="Ayesha" className="h-7 w-7 text-[10px]" ring={false} online />}
+      />
+      <div className="flex-1 space-y-1.5 overflow-hidden p-2.5 text-[8px] leading-snug">
+        {msgs.map(([dir, text, time]) => (
+          <div
+            key={time}
+            className={
+              dir === 'in'
+                ? 'max-w-[78%] rounded-xl border border-line bg-white px-2 py-1.5 text-ink'
+                : 'ml-auto max-w-[78%] rounded-xl rounded-br-sm bg-primary px-2 py-1.5 text-white'
+            }
+          >
+            {text}
+            <span className={`mt-0.5 block text-right text-[6px] ${dir === 'in' ? 'text-muted' : 'text-white/60'}`}>{time}</span>
+          </div>
+        ))}
       </div>
-      <div className="flex-1 space-y-2 p-3 text-[10px] leading-snug">
-        <p className="max-w-[78%] rounded-2xl rounded-tl-sm bg-white p-2.5 text-ink shadow-sm">
-          Asslamualaikum! Thank you for accepting. I liked that family matters a lot to you too.
-        </p>
-        <p className="ml-auto max-w-[78%] rounded-2xl rounded-tr-sm bg-maroon p-2.5 text-ivory">
-          Walaikumasslam! Yes, very much. Would you like our families to talk this weekend?
-        </p>
-        <p className="max-w-[78%] rounded-2xl rounded-tl-sm bg-white p-2.5 text-ink shadow-sm">
-          That sounds lovely. Let&apos;s plan a video call first 😊
-        </p>
-        <p className="flex items-center justify-end gap-1 text-[9px] text-ink/50">
-          <Check className="h-3 w-3" /> Seen
-        </p>
-      </div>
-      <div className="m-3 flex items-center gap-2 rounded-full bg-white px-3 py-2 text-[10px] text-ink/40 shadow-sm">
-        Type a message…
-        <span className="ml-auto grid h-6 w-6 place-items-center rounded-full bg-maroon text-ivory">
-          <Send className="h-3 w-3" />
+      <div className="flex items-center gap-1.5 border-t border-line bg-white px-2 py-2">
+        <Paperclip className="h-3 w-3 text-primary" />
+        <Smile className="h-3 w-3 text-primary" />
+        <span className="flex-1 rounded-full bg-background px-2 py-1.5 text-[8px] text-muted">Type a message…</span>
+        <Mic className="h-3 w-3 text-primary" />
+        <span className="grid h-6 w-6 place-items-center rounded-full bg-accent text-primary-dark">
+          <SendHorizontal className="h-3 w-3" />
         </span>
       </div>
     </div>
@@ -195,63 +343,63 @@ function ChatScreen() {
 
 function Toggle({ on }) {
   return (
-    <span className={`relative h-4 w-7 shrink-0 rounded-full ${on ? 'bg-maroon' : 'bg-ink/20'}`}>
-      <span className={`absolute top-0.5 h-3 w-3 rounded-full bg-white transition-all ${on ? 'left-3.5' : 'left-0.5'}`} />
+    <span className={`relative h-2.5 w-5 shrink-0 rounded-full ${on ? 'bg-accent' : 'bg-line'}`}>
+      <span
+        className={`absolute -top-[3px] h-4 w-4 rounded-full border border-line bg-white shadow ${on ? 'right-[-3px]' : 'left-[-3px]'}`}
+      />
     </span>
   )
 }
 
 function SettingsScreen() {
-  const rows = [
-    { label: 'Photo visibility', value: 'Accepted only' },
-    { label: 'Show contact details', toggle: false },
-    { label: 'Hide my profile', toggle: false },
-    { label: 'Notifications', toggle: true, icon: Bell },
+  const groups = [
+    {
+      title: 'Profile visibility',
+      rows: [
+        { icon: EyeOff, label: 'Hide my profile', sub: 'Not shown in search results', on: false },
+        { icon: Eye, label: 'Incognito browsing', sub: 'Browse without being noticed', on: false },
+        { icon: Shield, label: 'Show online status', sub: "Let others see when you're online", on: true },
+      ],
+    },
+    {
+      title: 'Photos & contact',
+      rows: [
+        { icon: ImageIcon, label: 'Photo privacy', sub: 'Only matches can view album', on: true },
+        { icon: LockKeyhole, label: 'Contact requests', sub: 'Only accepted matches can contact', on: true },
+      ],
+    },
   ]
   return (
-    <div className="flex h-full flex-col bg-ivory">
-      <ScreenHeader title="Privacy & Settings" />
-      <div className="p-3">
-        <p className="px-1 text-[10px] font-semibold uppercase tracking-wider text-gold">Privacy</p>
-        <div className="mt-2 divide-y divide-ivory overflow-hidden rounded-2xl bg-white shadow-sm">
-          {rows.map((r) => (
-            <div key={r.label} className="flex items-center justify-between gap-2 px-3 py-2.5 text-[11px] text-ink">
-              <span>{r.label}</span>
-              {'toggle' in r ? (
-                <Toggle on={r.toggle} />
-              ) : (
-                <span className="inline-flex items-center gap-0.5 text-[10px] text-maroon">
-                  {r.value} <ChevronRight className="h-3 w-3" />
-                </span>
-              )}
+    <div className="flex h-full flex-col bg-background">
+      <AppHeader title="Privacy" subtitle="Control who sees your profile" left={<CircleBtn icon={ArrowLeft} />} />
+      <div className="px-2.5 pb-3">
+        {groups.map((g) => (
+          <div key={g.title}>
+            <p className="mb-1.5 mt-3 px-0.5 text-[8px] font-semibold uppercase tracking-wider text-muted">{g.title}</p>
+            <div className="overflow-hidden rounded-xl border border-line bg-white">
+              {g.rows.map(({ icon: Icon, label, sub, on }) => (
+                <div key={label} className="flex items-center gap-2 border-b border-line px-2.5 py-2 last:border-b-0">
+                  <Icon className="h-3 w-3 shrink-0 text-accent" />
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[9px] font-medium text-ink">{label}</span>
+                    <span className="block truncate text-[7px] text-muted">{sub}</span>
+                  </span>
+                  <Toggle on={on} />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-
-        <p className="mt-4 px-1 text-[10px] font-semibold uppercase tracking-wider text-gold">Safety</p>
-        <div className="mt-2 divide-y divide-ivory overflow-hidden rounded-2xl bg-white shadow-sm">
-          <div className="flex items-center justify-between px-3 py-2.5 text-[11px] text-ink">
-            <span className="inline-flex items-center gap-2">
-              <Ban className="h-3.5 w-3.5 text-maroon" /> Blocked members
-            </span>
-            <ChevronRight className="h-3 w-3 text-ink/40" />
           </div>
-          <div className="flex items-center justify-between px-3 py-2.5 text-[11px] text-ink">
-            <span className="inline-flex items-center gap-2">
-              <LockKeyhole className="h-3.5 w-3.5 text-maroon" /> Change password
-            </span>
-            <ChevronRight className="h-3 w-3 text-ink/40" />
-          </div>
-        </div>
-
-        <div className="mt-4 flex items-center gap-2 rounded-2xl bg-white px-3 py-2.5 text-[11px] text-maroon shadow-sm">
-          <Trash2 className="h-3.5 w-3.5" /> Delete account
+        ))}
+        <p className="mb-1.5 mt-3 px-0.5 text-[8px] font-semibold uppercase tracking-wider text-muted">Safety</p>
+        <div className="flex items-center gap-2 rounded-xl border border-line bg-white px-2.5 py-2.5">
+          <UserRoundX className="h-3 w-3 text-accent" />
+          <span className="flex-1 text-[9px] font-medium text-ink">Blocked profiles</span>
+          <ChevronRight className="h-3 w-3 text-ink-soft" />
         </div>
       </div>
     </div>
   )
 }
-
 
 const builtInScreens = [
   { key: 'profile', label: 'Profile', node: <ProfileScreen /> },
@@ -263,9 +411,9 @@ const builtInScreens = [
 
 export function PhoneFrame({ children, className = '' }) {
   return (
-    <div className={`relative rounded-[2.3rem] border border-ink/20 bg-ink p-2 shadow-2xl shadow-maroon/25 ${className}`}>
+    <div className={`relative rounded-[2.3rem] border border-ink/20 bg-ink p-2 shadow-2xl shadow-primary/25 ${className}`}>
       <div className="absolute left-1/2 top-3.5 z-20 h-4 w-20 -translate-x-1/2 rounded-full bg-ink" />
-      <div className="relative h-[500px] overflow-hidden rounded-[1.9rem] bg-ivory">{children}</div>
+      <div className="relative h-[500px] overflow-hidden rounded-[1.9rem] bg-background">{children}</div>
     </div>
   )
 }
@@ -292,7 +440,7 @@ export function AppGallery() {
             className={`w-[230px] shrink-0 snap-center xl:w-[215px] ${i % 2 === 1 ? 'xl:mt-12' : ''}`}
           >
             <PhoneFrame>{s.node}</PhoneFrame>
-            <figcaption className="mt-4 text-center font-heading text-sm font-semibold text-maroon-deep">
+            <figcaption className="mt-4 text-center font-heading text-sm font-semibold text-primary-dark">
               {s.label}
             </figcaption>
           </motion.figure>

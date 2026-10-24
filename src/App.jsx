@@ -9,6 +9,9 @@ const HowItWorksPage = lazy(() => import('./pages/HowItWorksPage'))
 const SafetyPage = lazy(() => import('./pages/SafetyPage'))
 const DownloadPage = lazy(() => import('./pages/DownloadPage'))
 const DeleteAccountPage = lazy(() => import('./pages/DeleteAccountPage'))
+const LegalPage = lazy(() => import('./pages/LegalPage'))
+const ContactPage = lazy(() => import('./pages/ContactPage'))
+const FaqPage = lazy(() => import('./pages/FaqPage'))
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 
 /* ------------------------------------------------------------------
@@ -16,12 +19,17 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
    and add a link in navLinks (src/lib/site.js).
 ------------------------------------------------------------------- */
 const pages = [
-  { path: '/', element: <HomePage />, title: 'Humsafar| Find Your Life Partner' },
+  { path: '/', element: <HomePage />, title: 'Humsafar | Find Your Life Partner' },
   { path: '/about', element: <AboutPage />, title: 'About Humsafar | Humsafar' },
   { path: '/how-it-works', element: <HowItWorksPage />, title: 'How It Works | Humsafar' },
   { path: '/safety', element: <SafetyPage />, title: 'Safety & Trust | Humsafar' },
   { path: '/download', element: <DownloadPage />, title: 'Download & Contact | Humsafar' },
   { path: '/delete-account', element: <DeleteAccountPage />, title: 'Delete Account | Humsafar' },
+  { path: '/privacy-policy', element: <LegalPage />, title: 'Privacy Policy | Humsafar' },
+  { path: '/terms', element: <LegalPage />, title: 'Terms of Use | Humsafar' },
+  { path: '/community-guidelines', element: <LegalPage />, title: 'Community Guidelines | Humsafar' },
+  { path: '/contact', element: <ContactPage />, title: 'Contact Us | Humsafar' },
+  { path: '/faq', element: <FaqPage />, title: 'FAQ | Humsafar' },
 ]
 
 function PageTitle() {
@@ -36,7 +44,7 @@ function PageTitle() {
 
 function App() {
   return (
-    <div className="min-h-screen overflow-x-clip bg-ivory font-sans text-ink">
+    <div className="min-h-screen overflow-x-clip bg-background font-sans text-ink">
       <ScrollManager />
       <PageTitle />
       <Navbar />

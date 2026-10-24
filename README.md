@@ -1,4 +1,4 @@
-# Humsafar – Daata Website
+# Humsafar Website
 
 React + Vite + Tailwind CSS · framer-motion · lucide-react · deployed on Vercel
 

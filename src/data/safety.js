@@ -1,11 +1,7 @@
 /* ------------------------------------------------------------------
    Safety & Trust page content
 
-   IMPORTANT: Before publishing, check every `status` below against
-   what the Humsafar – Daata app actually does today.
-     'available' = members can use it right now
-     'planned'   = on the roadmap, NOT live yet
-   Only mark something 'available' once it is live in the app.
+   Only list features that are live in the Humsafar app today.
 ------------------------------------------------------------------- */
 
 export const LAST_UPDATED = 'October 2026'
@@ -21,25 +17,11 @@ export const safetyTopics = [
       {
         title: 'Mobile number verification',
         description:
-          'Every account confirms a working mobile number with a one-time password (OTP) at sign-up.',
-        status: 'available',
+          'Every account confirms a working mobile number with a one-time password (OTP) at sign-up.'
       },
       {
         title: 'Email verification',
-        description: 'Members confirm their email address before using their account.',
-        status: 'available',
-      },
-      {
-        title: 'Government ID verification',
-        description:
-          'Optional ID check, shown as a "Verified" badge on the profile. Your ID document will never be shown to other members.',
-        status: 'planned',
-      },
-      {
-        title: 'Selfie verification',
-        description:
-          'A live selfie compared with profile photos to confirm the photos belong to the member.',
-        status: 'planned',
+        description: 'Members confirm their email address before using their account.'
       },
     ],
   },
@@ -52,32 +34,22 @@ export const safetyTopics = [
       {
         title: 'Contact details stay private',
         description:
-          'Your phone number and email are not shown on your profile. You choose when to share them.',
-        status: 'available',
+          'Your phone number and email are not shown on your profile. You choose when to share them.'
       },
       {
         title: 'Photo visibility settings',
         description:
-          'Choose whether your photos are visible to all members or only to people you accept.',
-        status: 'available',
+          'Choose whether your photos are visible to all members or only to people you accept.'
       },
       {
         title: 'Hide or pause your profile',
         description:
-          'Take a break at any time. A hidden profile does not appear in search results.',
-        status: 'available',
+          'Take a break at any time. A hidden profile does not appear in search results.'
       },
       {
         title: 'Delete your account',
         description:
-          'Permanently delete your account and profile whenever you want to leave.',
-        status: 'available',
-      },
-      {
-        title: 'Field-by-field visibility',
-        description:
-          'Fine control over who can see details such as income, workplace or family information.',
-        status: 'planned',
+          'Permanently delete your account and profile whenever you want to leave.'
       },
     ],
   },
@@ -90,20 +62,7 @@ export const safetyTopics = [
       {
         title: 'Photo review before it goes live',
         description:
-          'New profile photos are reviewed by our team. Photos that are inappropriate, misleading or not of the member are rejected.',
-        status: 'available',
-      },
-      {
-        title: 'Automatic image screening',
-        description:
-          'Automated checks to flag inappropriate, copied or stock images faster.',
-        status: 'planned',
-      },
-      {
-        title: 'Photo watermarking',
-        description:
-          'A watermark on profile photos to discourage copying and misuse.',
-        status: 'planned',
+          'New profile photos are reviewed by our team. Photos that are inappropriate, misleading or not of the member are rejected.'
       },
     ],
   },
@@ -116,20 +75,12 @@ export const safetyTopics = [
       {
         title: 'Report a profile',
         description:
-          'Use the Report option on any profile and choose a reason, such as fake profile, harassment, asking for money or inappropriate content.',
-        status: 'available',
+          'Use the Report option on any profile and choose a reason, such as fake profile, harassment, asking for money or inappropriate content.'
       },
       {
         title: 'Report a conversation',
         description:
-          'Report a message or chat directly from the conversation screen.',
-        status: 'available',
-      },
-      {
-        title: 'Report status updates',
-        description:
-          'An in-app notification telling you when your report has been reviewed.',
-        status: 'planned',
+          'Report a message or chat directly from the conversation screen.'
       },
     ],
   },
@@ -142,13 +93,11 @@ export const safetyTopics = [
       {
         title: 'Block a member',
         description:
-          'Once blocked, a member cannot view your profile, send you interests or message you.',
-        status: 'available',
+          'Once blocked, a member cannot view your profile, send you interests or message you.'
       },
       {
         title: 'Manage your blocked list',
-        description: 'See everyone you have blocked and unblock them if you change your mind.',
-        status: 'available',
+        description: 'See everyone you have blocked and unblock them if you change your mind.'
       },
     ],
   },
@@ -167,7 +116,7 @@ export const scamRedFlags = [
 
 export const safePractices = [
   'Never send money or share financial details with someone you have not met.',
-  'Never share an OTP. Humsafar – Daata will never ask for your password or OTP.',
+  'Never share an OTP. Humsafar will never ask for your password or OTP.',
   'Video call before meeting in person, so you know the person matches their photos.',
   'Meet in a busy public place for the first few meetings, and tell family or a friend where you are going.',
   'Involve your family early. Verify details such as job and family independently.',
@@ -179,17 +128,6 @@ export const helpChannels = [
   {
     title: 'Email support',
     description:
-      'Write to our team about safety concerns, account issues or a member you have reported.',
-    status: 'available',
-  },
-  {
-    title: 'In-app help centre',
-    description: 'Safety guides and support requests directly inside the app.',
-    status: 'planned',
-  },
-  {
-    title: 'Priority safety helpline',
-    description: 'A dedicated line for urgent safety concerns on the platform.',
-    status: 'planned',
+      'Write to our team about safety concerns, account issues or a member you have reported.'
   },
 ]

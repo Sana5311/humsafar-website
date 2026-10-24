@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Download, Heart, Mail, Menu, Phone, X } from 'lucide-react'
-import { StoreButtons } from './ui'
+import { Download, Mail, Menu, Phone, X } from 'lucide-react'
+import { LogoFull, LogoMark, StoreButtons } from './ui'
 import {
   SUPPORT_EMAIL,
   SUPPORT_PHONE,
@@ -17,17 +17,11 @@ import {
 export function Brand({ light = false }) {
   return (
     <Link to="/" className="inline-flex shrink-0 items-center gap-3" aria-label="Humsafar home">
-      <span
-        className={`grid h-11 w-11 place-items-center rounded-full border ${
-          light ? 'border-gold/60 bg-maroon-deep text-gold' : 'border-gold/50 bg-maroon text-gold'
-        }`}
-      >
-        <Heart className="h-5 w-5" fill="currentColor" strokeWidth={1.5} />
-      </span>
+      <LogoMark className="h-12 w-12" />
       <span className="leading-none">
         <strong
           className={`block font-heading text-xl font-semibold tracking-wide ${
-            light ? 'text-ivory' : 'text-maroon'
+            light ? 'text-background' : 'text-primary'
           }`}
         >
           Humsafar
@@ -86,21 +80,21 @@ export function Navbar() {
   }, [])
 
   const desktopLink = ({ isActive }) =>
-    `relative whitespace-nowrap text-sm transition-colors after:absolute after:-bottom-1.5 after:left-0 after:h-px after:bg-gold after:transition-all after:duration-300 hover:text-maroon hover:after:w-full ${
-      isActive ? 'font-medium text-maroon after:w-full' : 'text-ink/80 after:w-0'
+    `relative whitespace-nowrap text-sm transition-colors after:absolute after:-bottom-1.5 after:left-0 after:h-px after:bg-accent after:transition-all after:duration-300 hover:text-primary hover:after:w-full ${
+      isActive ? 'font-medium text-primary after:w-full' : 'text-ink/80 after:w-0'
     }`
 
   const mobileLink = ({ isActive }) =>
-    `rounded-lg px-3 py-3 text-sm hover:bg-maroon/5 hover:text-maroon ${
-      isActive ? 'bg-maroon/5 font-medium text-maroon' : 'text-ink/80'
+    `rounded-lg px-3 py-3 text-sm hover:bg-primary/5 hover:text-primary ${
+      isActive ? 'bg-primary/5 font-medium text-primary' : 'text-ink/80'
     }`
 
   return (
     <header
       className={`sticky top-0 z-50 w-full border-b transition-all duration-300 ${
         scrolled || open
-          ? 'border-gold/30 bg-ivory/95 shadow-sm backdrop-blur-md'
-          : 'border-transparent bg-ivory'
+          ? 'border-accent/30 bg-background/95 shadow-sm backdrop-blur-md'
+          : 'border-transparent bg-background'
       }`}
     >
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-3 px-4 sm:gap-6 sm:px-6 lg:px-8">
@@ -125,7 +119,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="grid h-11 w-11 place-items-center rounded-full border border-gold/50 text-maroon lg:hidden"
+            className="grid h-11 w-11 place-items-center rounded-full border border-accent/50 text-primary lg:hidden"
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
           >
@@ -141,7 +135,7 @@ export function Navbar() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="overflow-hidden border-t border-gold/30 bg-ivory lg:hidden"
+            className="overflow-hidden border-t border-accent/30 bg-background lg:hidden"
             aria-label="Mobile"
           >
             <div className="flex flex-col gap-1 px-4 py-4">
@@ -163,15 +157,17 @@ export function Navbar() {
 ------------------------------------------------------------------- */
 export function Footer() {
   return (
-    <footer className="bg-ink text-ivory">
+    <footer className="bg-ink text-background">
       <div className="mx-auto max-w-7xl px-4 pb-8 pt-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-[1.3fr_2fr]">
           <div>
-            <Brand light />
-            <p className="mt-5 font-hand text-xl text-gold">
+            <Link to="/" aria-label="Humsafar home" className="inline-block">
+              <LogoFull className="h-32 w-32 shadow-black/30" />
+            </Link>
+            <p className="mt-5 font-hand text-xl text-accent">
               Every beautiful story begins with a connection.
             </p>
-            <p className="mt-3 max-w-sm text-sm leading-7 text-ivory/65">
+            <p className="mt-3 max-w-sm text-sm leading-7 text-background/65">
               A marriage-first matchmaking app for people who are ready to find a
               life partner.
             </p>
@@ -183,13 +179,13 @@ export function Footer() {
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
             {footerColumns.map((col) => (
               <div key={col.title}>
-                <h3 className="font-heading text-sm font-semibold tracking-wider text-gold">
+                <h3 className="font-heading text-sm font-semibold tracking-wider text-accent">
                   {col.title}
                 </h3>
                 <ul className="mt-4 space-y-3">
                   {col.links.map((link) => (
                     <li key={link.label}>
-                      <Link to={link.to} className="text-sm text-ivory/70 transition-colors hover:text-gold">
+                      <Link to={link.to} className="text-sm text-background/70 transition-colors hover:text-accent">
                         {link.label}
                       </Link>
                     </li>
@@ -199,12 +195,12 @@ export function Footer() {
             ))}
 
             <div className="col-span-2 sm:col-span-1">
-              <h3 className="font-heading text-sm font-semibold tracking-wider text-gold">Contact</h3>
-              <ul className="mt-4 space-y-3 text-sm text-ivory/70">
+              <h3 className="font-heading text-sm font-semibold tracking-wider text-accent">Contact</h3>
+              <ul className="mt-4 space-y-3 text-sm text-background/70">
                 <li>
                   <a
                     href={`mailto:${SUPPORT_EMAIL}`}
-                    className="inline-flex items-start gap-2 break-all transition-colors hover:text-gold"
+                    className="inline-flex items-start gap-2 break-all transition-colors hover:text-accent"
                   >
                     <Mail className="mt-0.5 h-4 w-4 shrink-0" />
                     {SUPPORT_EMAIL}
@@ -214,7 +210,7 @@ export function Footer() {
                   <li>
                     <a
                       href={`tel:${SUPPORT_PHONE.replace(/\s/g, '')}`}
-                      className="inline-flex items-center gap-2 transition-colors hover:text-gold"
+                      className="inline-flex items-center gap-2 transition-colors hover:text-accent"
                     >
                       <Phone className="h-4 w-4 shrink-0" />
                       {SUPPORT_PHONE}
@@ -226,10 +222,19 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col items-center justify-between gap-3 border-t border-ivory/10 pt-6 text-xs text-ivory/50 sm:flex-row">
+        <div className="mt-14 flex flex-col items-center justify-between gap-3 border-t border-background/10 pt-6 text-xs text-background/50 sm:flex-row">
           <span>© {new Date().getFullYear()} Humsafar. All rights reserved.</span>
           <span className="inline-flex items-center gap-1.5">
-            Made with <Heart className="h-3 w-3 text-gold" fill="currentColor" /> for meaningful marriages
+            
+Designed & Developed by{" "}
+<a
+  href="https://www.linkedin.com/in/sana-mamnoon-51255726a/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="text-accent no-underline transition-colors duration-300 hover:text-accent-light hover:underline"
+>
+  Sana 
+</a>
           </span>
         </div>
       </div>
