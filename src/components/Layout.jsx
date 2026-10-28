@@ -228,7 +228,7 @@ export function Footer() {
             
 Designed & Developed by{" "}
 <a
-  href="https://www.linkedin.com/in/sana-mamnoon-51255726a/"
+  href="https://www.linkedin.com/in/sana-51255726a"
   target="_blank"
   rel="noopener noreferrer"
   className="text-accent no-underline transition-colors duration-300 hover:text-accent-light hover:underline"

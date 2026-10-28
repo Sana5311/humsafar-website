@@ -1,8 +1,10 @@
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import {
   ArrowLeft,
   BadgeCheck,
   Camera,
+  ChevronLeft,
   ChevronRight,
   Crown,
   Download,
@@ -409,17 +411,41 @@ const builtInScreens = [
   { key: 'settings', label: 'Privacy settings', node: <SettingsScreen /> },
 ]
 
+/* Screens are drawn at a fixed 214 × 500 design size and scaled up by
+   --phone-scale, so text, icons and spacing all grow together. */
+const SCREEN_W = 214
+const SCREEN_H = 500
+
 export function PhoneFrame({ children, className = '' }) {
   return (
-    <div className={`relative rounded-[2.3rem] border border-ink/20 bg-ink p-2 shadow-2xl shadow-primary/25 ${className}`}>
-      <div className="absolute left-1/2 top-3.5 z-20 h-4 w-20 -translate-x-1/2 rounded-full bg-ink" />
-      <div className="relative h-[500px] overflow-hidden rounded-[1.9rem] bg-background">{children}</div>
+    <div
+      className={`relative rounded-[calc(2.3rem*var(--phone-scale,1))] border border-ink/20 bg-ink p-[calc(8px*var(--phone-scale,1))] shadow-2xl shadow-primary/25 ${className}`}
+    >
+      <div className="absolute left-1/2 top-[calc(14px*var(--phone-scale,1))] z-20 h-[calc(16px*var(--phone-scale,1))] w-[calc(80px*var(--phone-scale,1))] -translate-x-1/2 rounded-full bg-ink" />
+      <div
+        className="relative overflow-hidden rounded-[calc(1.9rem*var(--phone-scale,1))] bg-background"
+        style={{
+          width: `calc(${SCREEN_W}px * var(--phone-scale, 1))`,
+          height: `calc(${SCREEN_H}px * var(--phone-scale, 1))`,
+        }}
+      >
+        <div
+          className="absolute left-0 top-0 origin-top-left"
+          style={{ width: SCREEN_W, height: SCREEN_H, transform: 'scale(var(--phone-scale, 1))' }}
+        >
+          {children}
+        </div>
+      </div>
     </div>
   )
 }
 
-/* Row of phones: swipeable on mobile, a staggered row on desktop */
+/* Row of phones: a horizontal strip you can swipe (mobile) or
+   scroll with the arrows / trackpad / scrollbar (desktop) */
 export function AppGallery() {
+  const rowRef = useRef(null)
+  const [edge, setEdge] = useState({ start: true, end: false })
+
   const screens = appScreenshots.length
     ? appScreenshots.map((s) => ({
         key: s.src,
@@ -428,23 +454,82 @@ export function AppGallery() {
       }))
     : builtInScreens
 
+  const updateEdges = useCallback(() => {
+    const el = rowRef.current
+    if (!el) return
+    setEdge({
+      start: el.scrollLeft <= 4,
+      end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 4,
+    })
+  }, [])
+
+  /* Desktop: size the phones so a whole phone (plus its label) fits in the
+     browser window under the navbar. MAX_DESKTOP_SCALE is the largest size
+     allowed — lower it to make the phones smaller. */
+  const MAX_DESKTOP_SCALE = 1.3
+  const fitToWindow = useCallback(() => {
+    const el = rowRef.current
+    if (!el) return
+    if (window.innerWidth < 1024) {
+      el.style.removeProperty('--phone-scale') // mobile/tablet use the class values
+      return
+    }
+    const room = window.innerHeight - 260 // navbar + stagger + caption + breathing room
+    const scale = Math.max(1, Math.min(MAX_DESKTOP_SCALE, room / 516))
+    el.style.setProperty('--phone-scale', scale.toFixed(3))
+  }, [])
+
+  useEffect(() => {
+    const onResize = () => {
+      fitToWindow()
+      updateEdges()
+    }
+    onResize()
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [fitToWindow, updateEdges])
+
+  const scrollByPhone = (dir) => {
+    const el = rowRef.current
+    if (!el) return
+    const card = el.querySelector('figure')
+    const step = card ? card.getBoundingClientRect().width + 32 : 360
+    el.scrollBy({ left: dir * step, behavior: 'smooth' })
+  }
+
+  const arrowBtn =
+    'absolute top-1/2 z-30 hidden h-12 w-12 -translate-y-1/2 place-items-center rounded-full border-2 border-accent bg-primary text-accent shadow-lg shadow-primary/30 transition hover:bg-primary-dark disabled:pointer-events-none disabled:opacity-0 md:grid'
+
   return (
     <div>
-      <div className="-mx-4 flex snap-x snap-mandatory gap-6 overflow-x-auto px-4 pb-6 pt-4 [scrollbar-width:none] sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 xl:mx-0 xl:justify-center xl:gap-5 xl:overflow-visible xl:px-0 [&::-webkit-scrollbar]:hidden">
-        {screens.map((s, i) => (
-          <motion.figure
-            key={s.key}
-            {...inView}
-            variants={fadeUp}
-            custom={i * 0.08}
-            className={`w-[230px] shrink-0 snap-center xl:w-[215px] ${i % 2 === 1 ? 'xl:mt-12' : ''}`}
-          >
-            <PhoneFrame>{s.node}</PhoneFrame>
-            <figcaption className="mt-4 text-center font-heading text-sm font-semibold text-primary-dark">
-              {s.label}
-            </figcaption>
-          </motion.figure>
-        ))}
+      <div className="relative">
+        <button type="button" aria-label="Previous screen" onClick={() => scrollByPhone(-1)} disabled={edge.start} className={`${arrowBtn} left-0 xl:-left-6`}>
+          <ChevronLeft className="h-6 w-6" />
+        </button>
+        <button type="button" aria-label="Next screen" onClick={() => scrollByPhone(1)} disabled={edge.end} className={`${arrowBtn} right-0 xl:-right-6`}>
+          <ChevronRight className="h-6 w-6" />
+        </button>
+
+        <div
+          ref={rowRef}
+          onScroll={updateEdges}
+          className="phone-row -mx-4 flex scroll-px-4 sm:scroll-px-6 lg:scroll-px-8 snap-x snap-mandatory items-start gap-6 overflow-x-auto px-4 pb-8 pt-4 [--phone-scale:1.15] sm:-mx-6 sm:gap-8 sm:px-6 sm:[--phone-scale:1.3] lg:-mx-8 lg:px-8 lg:[--phone-scale:1.3] lg:[mask-image:linear-gradient(to_right,transparent,black_24px,black_calc(100%-24px),transparent)]"
+        >
+          {screens.map((s, i) => (
+            <motion.figure
+              key={s.key}
+              {...inView}
+              variants={fadeUp}
+              custom={i * 0.08}
+              className={`shrink-0 snap-center lg:snap-start ${i % 2 === 1 ? 'lg:mt-10' : ''}`}
+            >
+              <PhoneFrame>{s.node}</PhoneFrame>
+              <figcaption className="mt-5 text-center font-heading text-base font-semibold text-primary-dark">
+                {s.label}
+              </figcaption>
+            </motion.figure>
+          ))}
+        </div>
       </div>
       {!appScreenshots.length && (
         <p className="mt-2 text-center text-xs text-ink/50">
