@@ -8,7 +8,27 @@
      { src: '/screens/home.png', label: 'Home' },
    While this list is empty, built-in preview screens are shown.
 ------------------------------------------------------------------- */
-export const appScreenshots = []
+export const appScreenshots = [
+  { src: '/screens/welcome.webp', label: 'Welcome' },
+  { src: '/screens/sign-up.webp', label: 'Free sign-up' },
+  { src: '/screens/home.webp', label: 'Home' },
+  { src: '/screens/offer.webp', label: 'Premium offer' },
+  { src: '/screens/match-profile.webp', label: 'Match profile' },
+  { src: '/screens/interests-received.webp', label: 'Interests received' },
+  { src: '/screens/interests-sent.webp', label: 'Interests sent' },
+  { src: '/screens/interests-accepted.webp', label: 'Interests accepted' },
+  { src: '/screens/messages.webp', label: 'Messages' },
+  { src: '/screens/chat.webp', label: 'Private chat' },
+  { src: '/screens/notifications.webp', label: 'Notifications' },
+  { src: '/screens/profile.webp', label: 'My profile' },
+  { src: '/screens/edit-profile.webp', label: 'Edit profile' },
+  { src: '/screens/edit-photos.webp', label: 'Photos' },
+  { src: '/screens/favourites.webp', label: 'Favourites' },
+  { src: '/screens/premium.webp', label: 'Premium plans' },
+  { src: '/screens/privacy.webp', label: 'Privacy settings' },
+  { src: '/screens/settings.webp', label: 'Settings' },
+  { src: '/screens/help-center.webp', label: 'Help center' },
+]
 
 /* ------------------------------------------------------------------
    Home hero image. Use licensed imagery or your own photography.

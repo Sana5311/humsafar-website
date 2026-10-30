@@ -415,8 +415,10 @@ const builtInScreens = [
    --phone-scale, so text, icons and spacing all grow together. */
 const SCREEN_W = 214
 const SCREEN_H = 500
+/* Real screenshots are 572 × 1278, so their frame is a touch shorter */
+const SHOT_H = Math.round(SCREEN_W * 1278 / 572)
 
-export function PhoneFrame({ children, className = '' }) {
+export function PhoneFrame({ children, className = '', screenH = SCREEN_H }) {
   return (
     <div
       className={`relative rounded-[calc(2.3rem*var(--phone-scale,1))] border border-ink/20 bg-ink p-[calc(8px*var(--phone-scale,1))] shadow-2xl shadow-primary/25 ${className}`}
@@ -426,12 +428,12 @@ export function PhoneFrame({ children, className = '' }) {
         className="relative overflow-hidden rounded-[calc(1.9rem*var(--phone-scale,1))] bg-background"
         style={{
           width: `calc(${SCREEN_W}px * var(--phone-scale, 1))`,
-          height: `calc(${SCREEN_H}px * var(--phone-scale, 1))`,
+          height: `calc(${screenH}px * var(--phone-scale, 1))`,
         }}
       >
         <div
           className="absolute left-0 top-0 origin-top-left"
-          style={{ width: SCREEN_W, height: SCREEN_H, transform: 'scale(var(--phone-scale, 1))' }}
+          style={{ width: SCREEN_W, height: screenH, transform: 'scale(var(--phone-scale, 1))' }}
         >
           {children}
         </div>
@@ -466,7 +468,7 @@ export function AppGallery() {
   /* Desktop: size the phones so a whole phone (plus its label) fits in the
      browser window under the navbar. MAX_DESKTOP_SCALE is the largest size
      allowed — lower it to make the phones smaller. */
-  const MAX_DESKTOP_SCALE = 1.3
+  const MAX_DESKTOP_SCALE = 1.05
   const fitToWindow = useCallback(() => {
     const el = rowRef.current
     if (!el) return
@@ -475,7 +477,7 @@ export function AppGallery() {
       return
     }
     const room = window.innerHeight - 260 // navbar + stagger + caption + breathing room
-    const scale = Math.max(1, Math.min(MAX_DESKTOP_SCALE, room / 516))
+    const scale = Math.max(0.9, Math.min(MAX_DESKTOP_SCALE, room / 516))
     el.style.setProperty('--phone-scale', scale.toFixed(3))
   }, [])
 
@@ -493,7 +495,7 @@ export function AppGallery() {
     const el = rowRef.current
     if (!el) return
     const card = el.querySelector('figure')
-    const step = card ? card.getBoundingClientRect().width + 32 : 360
+    const step = card ? card.getBoundingClientRect().width + 24 : 300
     el.scrollBy({ left: dir * step, behavior: 'smooth' })
   }
 
@@ -513,7 +515,7 @@ export function AppGallery() {
         <div
           ref={rowRef}
           onScroll={updateEdges}
-          className="phone-row -mx-4 flex scroll-px-4 sm:scroll-px-6 lg:scroll-px-8 snap-x snap-mandatory items-start gap-6 overflow-x-auto px-4 pb-8 pt-4 [--phone-scale:1.15] sm:-mx-6 sm:gap-8 sm:px-6 sm:[--phone-scale:1.3] lg:-mx-8 lg:px-8 lg:[--phone-scale:1.3] lg:[mask-image:linear-gradient(to_right,transparent,black_24px,black_calc(100%-24px),transparent)]"
+          className="phone-row -mx-4 flex scroll-px-4 sm:scroll-px-6 lg:scroll-px-8 snap-x snap-mandatory items-start gap-6 overflow-x-auto px-4 pb-8 pt-4 [--phone-scale:1] sm:-mx-6 sm:gap-6 sm:px-6 sm:[--phone-scale:1.05] lg:-mx-8 lg:px-8 lg:[--phone-scale:1.05] lg:[mask-image:linear-gradient(to_right,transparent,black_24px,black_calc(100%-24px),transparent)]"
         >
           {screens.map((s, i) => (
             <motion.figure
@@ -523,19 +525,19 @@ export function AppGallery() {
               custom={i * 0.08}
               className={`shrink-0 snap-center lg:snap-start ${i % 2 === 1 ? 'lg:mt-10' : ''}`}
             >
-              <PhoneFrame>{s.node}</PhoneFrame>
-              <figcaption className="mt-5 text-center font-heading text-base font-semibold text-primary-dark">
+              <PhoneFrame screenH={appScreenshots.length ? SHOT_H : SCREEN_H}>{s.node}</PhoneFrame>
+              <figcaption className="mt-4 text-center font-heading text-sm font-semibold text-primary-dark">
                 {s.label}
               </figcaption>
             </motion.figure>
           ))}
         </div>
       </div>
-      {!appScreenshots.length && (
-        <p className="mt-2 text-center text-xs text-ink/50">
-          Illustrative preview. Sample names and details, not real members.
-        </p>
-      )}
+      <p className="mt-2 text-center text-xs text-ink/50">
+        {appScreenshots.length
+          ? 'Screens from the Humsafar app. Sample profiles shown, not real members.'
+          : 'Illustrative preview. Sample names and details, not real members.'}
+      </p>
     </div>
   )
 }
