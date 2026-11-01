@@ -4,6 +4,7 @@
    Humsafar theme tokens
    Use as Tailwind classes, e.g. bg-primary, text-accent, font-heading
 ------------------------------------------------------------------- */
+
 @theme {
     /* Brand colours — default deep purple + gold */
     --color-primary: #2D0B59;
@@ -22,7 +23,6 @@
     --color-error: #C62828;
     --color-warning: #E6A817;
     --color-online: #22C55E;
-
     /* Fonts */
     --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
     --font-heading: "Cinzel", Georgia, serif;
@@ -30,7 +30,9 @@
     --font-hand: "Dancing Script", cursive;
 }
 
+
 /* Alternate brand — deep green. Enable with <html data-theme="green"> */
+
 [data-theme="green"] {
     --color-primary: #0B5C3E;
     --color-primary-dark: #063528;
@@ -45,7 +47,6 @@
         scroll-behavior: smooth;
         min-width: 320px;
     }
-
     body {
         margin: 0;
         min-height: 100vh;
@@ -56,18 +57,15 @@
         -moz-osx-font-smoothing: grayscale;
         text-rendering: optimizeLegibility;
     }
-
     /* keep section headings clear of the sticky navbar when jumping to #links */
     [id] {
         scroll-margin-top: 5.5rem;
     }
-
-    ::selection {
+     ::selection {
         background-color: var(--color-primary);
         color: var(--color-background);
     }
-
-    :focus-visible {
+     :focus-visible {
         outline: 2px solid var(--color-accent);
         outline-offset: 3px;
     }
@@ -76,5 +74,39 @@
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
+    }
+}
+
+
+/* ------------------------------------------------------------------
+   App preview marquee (continuous right-to-left loop)
+   The track holds the screens twice, so moving it left by half its
+   width (+ half the 24px gap) loops with no jump.
+------------------------------------------------------------------- */
+
+.phone-marquee-track {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    width: max-content;
+    animation: phone-marquee 40s linear infinite;
+}
+
+.phone-marquee:hover .phone-marquee-track {
+    animation-play-state: paused;
+}
+
+@keyframes phone-marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(calc(-50% - 12px));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .phone-marquee-track {
+        animation: none;
     }
 }

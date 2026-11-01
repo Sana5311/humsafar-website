@@ -1,10 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
+import { useCallback, useEffect, useRef } from 'react'
 import {
   ArrowLeft,
   BadgeCheck,
   Camera,
-  ChevronLeft,
   ChevronRight,
   Crown,
   Download,
@@ -28,7 +26,6 @@ import {
   Users,
 } from 'lucide-react'
 import { appScreenshots } from '../data/content'
-import { fadeUp, inView } from '../lib/site'
 
 /* ==================================================================
    App preview screens, drawn in code to match the Humsafar app UI
@@ -442,11 +439,11 @@ export function PhoneFrame({ children, className = '', screenH = SCREEN_H }) {
   )
 }
 
-/* Row of phones: a horizontal strip you can swipe (mobile) or
-   scroll with the arrows / trackpad / scrollbar (desktop) */
+/* Row of phones: a continuous marquee that slides right-to-left forever.
+   Speed: change 40s in .phone-marquee-track (src/index.css).
+   Pauses while the mouse is over it. */
 export function AppGallery() {
   const rowRef = useRef(null)
-  const [edge, setEdge] = useState({ start: true, end: false })
 
   const screens = appScreenshots.length
     ? appScreenshots.map((s) => ({
@@ -456,15 +453,6 @@ export function AppGallery() {
       }))
     : builtInScreens
 
-  const updateEdges = useCallback(() => {
-    const el = rowRef.current
-    if (!el) return
-    setEdge({
-      start: el.scrollLeft <= 4,
-      end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 4,
-    })
-  }, [])
-
   /* Desktop: size the phones so a whole phone (plus its label) fits in the
      browser window under the navbar. MAX_DESKTOP_SCALE is the largest size
      allowed — lower it to make the phones smaller. */
@@ -473,7 +461,7 @@ export function AppGallery() {
     const el = rowRef.current
     if (!el) return
     if (window.innerWidth < 1024) {
-      el.style.removeProperty('--phone-scale') // mobile/tablet use the class values
+      el.style.setProperty('--phone-scale', window.innerWidth >= 640 ? '1.05' : '1')
       return
     }
     const room = window.innerHeight - 260 // navbar + stagger + caption + breathing room
@@ -482,62 +470,36 @@ export function AppGallery() {
   }, [])
 
   useEffect(() => {
-    const onResize = () => {
-      fitToWindow()
-      updateEdges()
-    }
-    onResize()
-    window.addEventListener('resize', onResize)
-    return () => window.removeEventListener('resize', onResize)
-  }, [fitToWindow, updateEdges])
-
-  const scrollByPhone = (dir) => {
-    const el = rowRef.current
-    if (!el) return
-    const card = el.querySelector('figure')
-    const step = card ? card.getBoundingClientRect().width + 24 : 300
-    el.scrollBy({ left: dir * step, behavior: 'smooth' })
-  }
-
-  const arrowBtn =
-    'absolute top-1/2 z-30 hidden h-12 w-12 -translate-y-1/2 place-items-center rounded-full border-2 border-accent bg-primary text-accent shadow-lg shadow-primary/30 transition hover:bg-primary-dark disabled:pointer-events-none disabled:opacity-0 md:grid'
+    fitToWindow()
+    window.addEventListener('resize', fitToWindow)
+    return () => window.removeEventListener('resize', fitToWindow)
+  }, [fitToWindow])
 
   return (
     <div>
-      <div className="relative">
-        <button type="button" aria-label="Previous screen" onClick={() => scrollByPhone(-1)} disabled={edge.start} className={`${arrowBtn} left-0 xl:-left-6`}>
-          <ChevronLeft className="h-6 w-6" />
-        </button>
-        <button type="button" aria-label="Next screen" onClick={() => scrollByPhone(1)} disabled={edge.end} className={`${arrowBtn} right-0 xl:-right-6`}>
-          <ChevronRight className="h-6 w-6" />
-        </button>
-
-        <div
-          ref={rowRef}
-          onScroll={updateEdges}
-          className="phone-row -mx-4 flex scroll-px-4 sm:scroll-px-6 lg:scroll-px-8 snap-x snap-mandatory items-start gap-6 overflow-x-auto px-4 pb-8 pt-4 [--phone-scale:1] sm:-mx-6 sm:gap-6 sm:px-6 sm:[--phone-scale:1.05] lg:-mx-8 lg:px-8 lg:[--phone-scale:1.05] lg:[mask-image:linear-gradient(to_right,transparent,black_24px,black_calc(100%-24px),transparent)]"
-        >
-          {screens.map((s, i) => (
-            <motion.figure
-              key={s.key}
-              {...inView}
-              variants={fadeUp}
-              custom={i * 0.08}
-              className={`shrink-0 snap-center lg:snap-start ${i % 2 === 1 ? 'lg:mt-10' : ''}`}
-            >
-              <PhoneFrame screenH={appScreenshots.length ? SHOT_H : SCREEN_H}>{s.node}</PhoneFrame>
-              <figcaption className="mt-4 text-center font-heading text-sm font-semibold text-primary-dark">
-                {s.label}
-              </figcaption>
-            </motion.figure>
-          ))}
+      <div
+        ref={rowRef}
+        className="phone-marquee overflow-hidden pb-8 pt-4 [--phone-scale:1] [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]"
+      >
+        <div className="phone-marquee-track">
+          {/* screens rendered twice = seamless loop */}
+          {[...screens, ...screens].map((s, idx) => {
+            const i = idx % screens.length
+            return (
+              <figure
+                key={`${s.key}-${idx}`}
+                aria-hidden={idx >= screens.length ? 'true' : undefined}
+                className={`shrink-0 ${i % 2 === 1 ? 'lg:mt-10' : ''}`}
+              >
+                <PhoneFrame screenH={appScreenshots.length ? SHOT_H : SCREEN_H}>{s.node}</PhoneFrame>
+                <figcaption className="mt-4 text-center font-heading text-sm font-semibold text-primary-dark">
+                  {s.label}
+                </figcaption>
+              </figure>
+            )
+          })}
         </div>
       </div>
-      <p className="mt-2 text-center text-xs text-ink/50">
-        {appScreenshots.length
-          ? 'Screens from the Humsafar app. Sample profiles shown, not real members.'
-          : 'Illustrative preview. Sample names and details, not real members.'}
-      </p>
     </div>
   )
 }
