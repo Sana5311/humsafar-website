@@ -225,8 +225,8 @@ export function Footer() {
         <div className="mt-14 flex flex-col items-center justify-between gap-3 border-t border-background/10 pt-6 text-xs text-background/50 sm:flex-row">
           <span>© {new Date().getFullYear()} Humsafar. All rights reserved.</span>
           <span className="inline-flex items-center gap-1.5">
-            
-Designed & Developed by{" "}
+ Maintained by <a href="https://www.devspheresolutions.com/" target="_blank" rel="noopener noreferrer" className="text-accent no-underline transition-colors duration-300 hover:text-accent-light hover:underline">DevSphere Solutions</a> | 
+ Designed & Developed by{" "}
 <a
   href="https://www.linkedin.com/in/sana-51255726a"
   target="_blank"
